@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 
 // Списки, элементы которых появляются «лесенкой» внутри блока
-const LISTS = '.grid, .steps, .phases, .flow, .faq, .contracts, .gloss, .scenes, .doc-sec ul'
+const LISTS = '.grid, .how__steps, .phases, .flow, .faq, .contracts, .gloss, .scenes, .doc-sec ul'
 
 // Плавное появление блоков при прокрутке: .reveal, затем .in, когда блок виден.
 // Дочерним элементам выставляется --i, элементам списков --j: по ним CSS делает задержки.

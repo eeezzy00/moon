@@ -1,6 +1,19 @@
 import { useMemo } from 'react'
 import { rng, discCells, nebula } from '../lib/pixel'
 
+// Облако туманности рисуется один раз в маленький canvas (240×100) и вставляется картинкой:
+// в DOM вместо сотен <rect> остаётся один <image>
+function nebulaImage(cells, color) {
+  if (typeof document === 'undefined') return ''
+  const c = document.createElement('canvas')
+  c.width = 240
+  c.height = 100
+  const ctx = c.getContext('2d')
+  ctx.fillStyle = color
+  for (const p of cells) { ctx.globalAlpha = p.o; ctx.fillRect(p.x, p.y, 2, 2) }
+  return c.toDataURL()
+}
+
 const STAR_COLORS = ['#E3FFF1', '#E3FFF1', '#9CFFD0', '#9CFFC8', '#FFF4C9']
 
 // Созвездия первого экрана: точки и связи между ними [индекс, индекс]
@@ -23,9 +36,9 @@ export default function Cosmos() {
       slow: r() > 0.6,
     }))
     const neb = [
-      { c: '#34E89A', cells: nebula(3, 60, 30, 55, 20) },
-      { c: '#4DFFA0', cells: nebula(9, 175, 45, 50, 18) },
-      { c: '#1a8f5c', cells: nebula(21, 120, 14, 70, 11) },
+      nebulaImage(nebula(3, 60, 30, 55, 20), '#34E89A'),
+      nebulaImage(nebula(9, 175, 45, 50, 18), '#4DFFA0'),
+      nebulaImage(nebula(21, 120, 14, 70, 11), '#1a8f5c'),
     ]
     const planet = discCells(205, 24, 8)
     const small = discCells(30, 66, 3.5)
@@ -57,10 +70,8 @@ export default function Cosmos() {
 
   return (
     <svg className="cosmos" viewBox="0 0 240 100" preserveAspectRatio="xMidYMid slice" shapeRendering="crispEdges" aria-hidden="true">
-      {data.neb.map((n, i) => (
-        <g key={i} fill={n.c} className={`neb neb${i}`}>
-          {n.cells.map((c, j) => <rect key={j} x={c.x} y={c.y} width="2" height="2" opacity={c.o} />)}
-        </g>
+      {data.neb.map((src, i) => (
+        <image key={i} href={src} x="0" y="0" width="240" height="100" className={`neb neb${i}`} style={{ imageRendering: 'pixelated' }} />
       ))}
 
       {data.stars.map((s, i) => (

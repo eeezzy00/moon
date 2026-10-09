@@ -4,6 +4,7 @@ import { useReveal } from './hooks/useReveal'
 import { useClickSfx } from './hooks/useClickSfx'
 import Backdrop from './components/Backdrop'
 import CursorTrail from './components/CursorTrail'
+import Preloader from './components/Preloader'
 import Header from './components/Header'
 import BlackHole from './components/BlackHole'
 import Hero from './components/Hero'
@@ -55,6 +56,7 @@ export default function App() {
       <LunaFab onClick={openChat} hidden={chat} />
       <LunaChat open={chat} onClose={closeChat} gram={gram} />
       <CursorTrail />
+      <Preloader />
     </>
   )
 }

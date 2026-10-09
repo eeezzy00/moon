@@ -1,10 +1,20 @@
 // Единое место для параметров проекта. Всё «рабочее» (имя, тикер, ссылка, адреса) меняется здесь.
 export const CONFIG = {
-  name: 'MOON',
+  name: 'MOON AI',
   ticker: '[TICKER]',
   launchUrl: 'https://moon.cx',
   docsUrl: 'https://moon.cx/docs',
+  socials: {
+    x: 'https://x.com/Moonaiofficial8',
+    telegram: 'https://t.me/+-Va7YKlK-z4zYTcy', // ранний доступ
+  },
   maxGram: 2000,
+  // Токеномика по стандарту фабрики moon.cx (как у MBTC). Сверить в интерфейсе moon.cx перед запуском.
+  token: {
+    supply: 1_000_000_000,
+    curve: 800_000_000, // продаётся на бондинг-кривой
+    pool: 200_000_000, // контракт вносит в пул при выходе
+  },
   phaseStep: 500,
   progressUrl: import.meta.env.VITE_PROGRESS_URL || '',
   // ЗАГЛУШКИ для имитации. Заменить настоящими адресами в день запуска.

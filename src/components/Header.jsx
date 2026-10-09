@@ -1,6 +1,7 @@
 import { useLang } from '../i18n'
 import { CONFIG } from '../lib/config'
 import RadioPlayer from './RadioPlayer'
+import { SocialIcons } from './Socials'
 
 // docs=true: шапка на странице документации, якоря ведут на главную
 export default function Header({ docs = false }) {
@@ -20,6 +21,7 @@ export default function Header({ docs = false }) {
             : <a href="/docs/" target="_blank" rel="noopener">{t.docsNav} ↗</a>}
         </nav>
         <div className="header__right">
+          <SocialIcons />
           <RadioPlayer />
           <div className="lang" role="group" aria-label="Language">
             {['ru', 'en'].map((l) => (

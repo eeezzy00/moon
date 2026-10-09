@@ -20,7 +20,7 @@ export default function Trail({ gram, unlockAt, children }) {
     const root = wrap.current
     if (!root) return
     const first = root.querySelector('.phase')
-    const els = [...root.querySelectorAll('.scene .simg')]
+    const els = [...root.querySelectorAll('.scene .tilt-wrap')] // обёртка кадра: её размер не зависит от наклона
     if (!first || els.length === 0) return setGeo(null)
 
     const half = root.offsetWidth / 2

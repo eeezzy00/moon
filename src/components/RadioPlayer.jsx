@@ -6,6 +6,20 @@ import track from '../../music/velariomusic-calm-ambient-603158.mp3?url'
 const STORAGE_KEY = 'moonfm-volume'
 const TIME_KEY = 'moonfm-time'
 const PAUSED_KEY = 'moonfm-paused' // пауза, поставленная пользователем (на время сессии)
+const OWNER_KEY = 'moonfm-owner' // вкладка, в которой играет музыка: { id, ts }
+const OWNER_TTL = 5000 // вкладка считается живой, пока обновляет метку чаще этого
+const TAB_ID = Math.random().toString(36).slice(2)
+
+// Музыка играет только в одной вкладке: в той, что открыта первой (или где нажали ▶ последней)
+function readOwner() {
+  try { return JSON.parse(localStorage.getItem(OWNER_KEY)) } catch { return null }
+}
+const otherTabOwns = () => {
+  const o = readOwner()
+  return Boolean(o && o.id !== TAB_ID && Date.now() - o.ts < OWNER_TTL)
+}
+const claim = () => { try { localStorage.setItem(OWNER_KEY, JSON.stringify({ id: TAB_ID, ts: Date.now() })) } catch {} }
+const isOwner = () => readOwner()?.id === TAB_ID
 
 function savedVolume() {
   try {
@@ -30,7 +44,7 @@ export default function RadioPlayer() {
 
   // Автозапуск с начала. Браузеры блокируют звук до первого действия пользователя,
   // поэтому при отказе трек стартует с первого клика, нажатия клавиши или касания.
-  // Позиция запоминается, и на соседней странице (документация) трек продолжается.
+  // Если музыка уже играет в другой вкладке, здесь она сама не запускается.
   useEffect(() => {
     const a = audio.current
     if (!a) return
@@ -50,14 +64,27 @@ export default function RadioPlayer() {
 
     const events = ['pointerdown', 'keydown', 'touchstart']
     const unlock = (e) => {
-      if (e.target.closest?.('.radio__btn') || userPaused()) return
+      if (e.target.closest?.('.radio__btn') || userPaused() || otherTabOwns()) return
+      claim()
       a.play().then(off).catch(() => {})
     }
     const off = () => events.forEach((ev) => window.removeEventListener(ev, unlock, true))
 
-    if (!userPaused()) {
+    if (!userPaused() && !otherTabOwns()) {
+      claim()
       a.play().catch(() => events.forEach((ev) => window.addEventListener(ev, unlock, true)))
     }
+
+    // вкладка-владелец обновляет метку; если музыку забрала другая вкладка, здесь ставим на паузу
+    const beat = setInterval(() => { if (isOwner()) claim() }, 1500)
+    const onStorage = (e) => {
+      if (e.key !== OWNER_KEY) return
+      const o = readOwner()
+      if (o && o.id !== TAB_ID && !a.paused) a.pause()
+    }
+    window.addEventListener('storage', onStorage)
+    const release = () => { try { if (isOwner()) localStorage.removeItem(OWNER_KEY) } catch {} }
+    window.addEventListener('pagehide', release)
 
     const save = () => { try { if (a.currentTime > 0) localStorage.setItem(TIME_KEY, String(a.currentTime)) } catch {} }
     const id = setInterval(save, 2000)
@@ -65,6 +92,9 @@ export default function RadioPlayer() {
     return () => {
       off()
       clearInterval(id)
+      clearInterval(beat)
+      window.removeEventListener('storage', onStorage)
+      window.removeEventListener('pagehide', release)
       window.removeEventListener('pagehide', save)
       a.removeEventListener('loadedmetadata', onMeta)
       a.removeEventListener('play', onPlay)
@@ -77,6 +107,7 @@ export default function RadioPlayer() {
     if (!a) return
     if (a.paused) {
       try { sessionStorage.removeItem(PAUSED_KEY) } catch {}
+      claim() // нажали ▶ здесь: музыка переезжает в эту вкладку, в остальных встанет на паузу
       a.play().catch(() => {})
     } else {
       try { sessionStorage.setItem(PAUSED_KEY, '1') } catch {}
@@ -100,7 +131,7 @@ export default function RadioPlayer() {
 
   return (
     <div className={`radio ${playing ? 'radio--on' : ''}`}>
-      <audio ref={audio} src={track} loop preload="auto" />
+      <audio ref={audio} src={track} loop preload="none" />
       <button className="radio__btn" onClick={toggle} aria-label={playing ? t.radioPause : t.radioPlay} title={playing ? t.radioPause : t.radioPlay}>
         <svg viewBox="0 0 8 8" width="14" height="14" shapeRendering="crispEdges" aria-hidden="true">
           {playing

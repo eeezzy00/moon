@@ -6,6 +6,7 @@ import HeroMoon from './HeroMoon'
 import Cosmos from './Cosmos'
 import SplitText from './SplitText'
 import Astronaut from './Astronaut'
+import { SocialLinks } from './Socials'
 
 export default function Hero({ gram }) {
   const { t } = useLang()
@@ -29,6 +30,7 @@ export default function Hero({ gram }) {
             <a className="btn" href={CONFIG.launchUrl} target="_blank" rel="noreferrer">{t.cta1}</a>
             <a className="btn btn--ghost" href="#how">{t.cta2}</a>
           </div>
+          <SocialLinks className="hero__social hero__in" />
           <div className="hero__stat hero__in" style={{ '--d': '1.35s' }}>
             <i /> <span>{t.phl[phase]}</span> · {percent(gram)}% {t.curve.toLowerCase()}
           </div>

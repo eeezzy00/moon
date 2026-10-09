@@ -2,20 +2,20 @@ export default {
   navAbout: 'About', navPhases: 'Phases', navToken: 'Token', buy: 'Buy on moon.cx',
   kicker: 'TON · LAUNCHING ON MOON.CX', h1: 'The moon grows as the curve grows',
   sub: 'A tiny 8-bit universe on TON. Every 500 GRAM on the curve unlocks a new phase. At full moon the token moves to the pool.',
-  cta1: 'Open MOON on moon.cx', cta2: 'How it works', fullBadge: 'FULL MOON · POOL IS LIVE',
+  cta1: 'Open MOON AI on moon.cx', cta2: 'How it works', fullBadge: 'FULL MOON AI · POOL IS LIVE',
   aboutK: 'ABOUT', aboutH: 'A token with a story and a shared goal',
-  aboutP1: 'MOON is a token on the moon.cx launchpad on TON. One bonding curve for everyone, a fixed supply and liquidity that is locked forever.',
+  aboutP1: 'MOON AI is a token on the moon.cx launchpad on TON. One bonding curve for everyone, a fixed supply and liquidity that is locked when the pool opens.',
   aboutP2: 'A tiny universe lives around the token. The moon grows with the curve, and LUNA.AI answers your questions. No rush: the moon grows by formula.',
-  a1t: 'Clear rules', a1d: 'Fixed supply, one curve for everyone, liquidity locked forever.',
+  a1t: 'Clear rules', a1d: 'Fixed supply, one curve for everyone, liquidity locked when the pool opens.',
   a2t: 'Living moon', a2d: 'The phase on the site is the curve progress. See how far we have come together.',
   a3t: 'An event ahead', a3d: 'Full moon is the moment of moving to the pool. Something to aim for and watch.',
 
   howK: 'HOW IT WORKS', howH: 'Four steps from new moon to the pool',
   steps: [
-    ['Launch', 'MOON appears in Launches on moon.cx. The curve opens for everyone at once.'],
+    ['Launch', 'MOON AI appears in Launches on moon.cx. The curve opens for everyone at once.'],
     ['Buying', 'Buyers move the price along the bonding curve. The more GRAM raised, the higher the progress.'],
     ['The moon grows', 'Every 500 GRAM the site unlocks a new moon phase. Everyone sees the progress in real time.'],
-    ['Full moon', 'At 2000 GRAM the contract creates a moon.cx pool and locks liquidity forever.'],
+    ['Full moon', 'At 2000 GRAM the contract creates a moon.cx pool and locks the liquidity.'],
   ],
 
   phH: 'Moon phases = curve progress',
@@ -39,35 +39,39 @@ export default {
   hello: 'Hi. I am LUNA.AI. I can tell you about the moon, the rules and the contracts. Ask away.',
   q: ['Tell the legend', 'When is full moon?', 'Who are you?', 'How to buy?', 'Any advice?'],
 
-  k1: 'SUPPLY', d1: 'Fixed at launch, no minting function.',
-  k2: 'TO MARKET', d2: '800M on the curve, 200M added to the pool by the contract.',
-  k3: 'FULL MOON', d3: 'Threshold for moving from the curve to the moon.cx pool.',
-  k4: 'LIQUIDITY', d4: 'Locked forever when the pool opens.',
-  net: 'Network', ticker: 'Ticker',
+  tokK: 'TOKENOMICS', tokH: 'The token in numbers',
+  tokP: 'Parameters are set by the moon.cx factory, the same for every token on the launchpad. The project has no contract of its own, so these numbers cannot be tweaked.',
+  supplyL: 'Total supply', supplyD: 'Fixed at launch. There is no minting function.',
+  curveL: 'On the bonding curve', curveD: 'Sold to everyone by one formula: the price rises with every purchase.',
+  poolL: 'Into the liquidity pool', poolD: 'The contract adds them to the moon.cx pool when the curve completes.',
+  gradL: 'Pool threshold', gradD: 'When this much is raised on the curve, the contract creates the pool. On the site that is full moon.',
+  lockL: 'Liquidity', lockV: 'LOCK', lockD: 'Locked when the curve completes. Only fees can be withdrawn from the pool.',
+  metaNet: 'Network', metaPad: 'Launchpad', metaTicker: 'Ticker', metaContract: 'Contract', metaContractV: 'on launch day',
+  tokNote: 'Numbers follow the moon.cx factory standard. Verify them on the token page before buying.',
 
   ctK: 'CONTRACTS', ctH: 'Addresses on TON',
   ctDemo: 'These are test addresses for the mockup. Real ones appear on launch day. Do not send funds to them.',
   copy: 'Copy', copied: 'Copied',
   ct: {
-    jetton: ['Token (Jetton)', 'The main MOON token contract.'],
+    jetton: ['Token (Jetton)', 'The main MOON AI token contract.'],
     curve: ['Bonding curve', 'The contract that takes purchases and calculates the price.'],
     pool: ['Pool', 'Appears when the curve reaches 2000 GRAM.'],
-    lock: ['Liquidity lock', 'The contract that holds liquidity forever.'],
+    lock: ['Liquidity lock', 'The contract that holds pool liquidity: only fees can be withdrawn.'],
   },
 
   faq: [
-    ['What is MOON?', 'A memecoin on the moon.cx launchpad on TON. It has no utility: it is a token with a story, a shared goal and an 8-bit universe around it.'],
+    ['What is MOON AI?', 'A memecoin on the moon.cx launchpad on TON. It has no utility: it is a token with a story, a shared goal and an 8-bit universe around it.'],
     ['How does the moon on the site work?', 'The site reads how much GRAM is raised on the curve and shows the phase: every 500 GRAM unlocks a new one, and full moon arrives at 2000 GRAM. The moon only shows progress.'],
     ['Does the moon affect the price?', 'No. The price is set by the moon.cx bonding curve. The site and the moon change nothing in the token economics.'],
     ['Where do I buy?', 'Only on moon.cx, via the Buy button on the site. After launch, verify the token address in the docs, at the end of the FAQ.'],
-    ['What happens at full moon?', 'When 2000 GRAM is raised on the curve, the contract creates a moon.cx pool and locks liquidity forever.'],
+    ['What happens at full moon?', 'When 2000 GRAM is raised on the curve, the contract creates a moon.cx pool and locks the liquidity.'],
     ['Is there a presale or a team allocation?', 'Not in the launch plan. Final parameters are set by the moon.cx factory, so verify them on the token page.'],
     ['Which wallet do I need?', 'Any wallet for the TON network, for example Tonkeeper. What matters is that only you hold the recovery phrase.'],
     ['Can I sell before full moon?', 'The rules for buying and selling on the curve are set by moon.cx. Check them on the token page before buying.'],
-    ['How is MOON different from other memecoins?', 'In story and design: the token has a living moon that shows shared progress, the LUNA.AI assistant and a clear goal in the form of full moon.'],
+    ['How is MOON AI different from other memecoins?', 'In story and design: the token has a living moon that shows shared progress, the LUNA.AI assistant and a clear goal in the form of full moon.'],
     ['Who is behind the project?', 'Information about the team and channels appears on launch day. Follow only the official links from this site.'],
     ['Will there be new features?', 'We plan LUNA.AI on a language model, a radio and the "light a star" idea. These are plans, not promises.'],
-    ['Is this investment advice?', 'No. MOON is a new and volatile token. You can lose what you put in, so never invest more than you can afford to lose.'],
+    ['Is this investment advice?', 'No. MOON AI is a new and volatile token. You can lose what you put in, so never invest more than you can afford to lose.'],
   ],
 
   fabLabel: 'Chat with LUNA.AI', chatOpen: 'Open chat with LUNA.AI', chatClose: 'Back to the site', lunaRole: 'The pixel astronaut of this universe. Tells you about phases, rules and contracts.',
@@ -103,81 +107,138 @@ export default {
       locked: (n) => `The blueprints from the case can only be read in moonlight. This chapter opens when there is enough light: ${n} GRAM on the curve.`,
     },
   },
+  tgEarly: 'Telegram · early access', followUs: 'Follow us',
   docsNav: 'Docs', docsBack: '← Back to home', docsOn: 'On this page',
   docsCtaK: 'DOCUMENTATION', docsCtaH: 'Want to dig deeper?',
   docsCtaP: 'In the docs: curve mechanics, moon phases, the moon.cx link, contracts, risks, a glossary and frequently asked questions.',
   docsBtn: 'Open the docs', docsFaqBtn: 'FAQ',
   docs: {
-    title: 'MOON Documentation',
-    intro: 'How the project works, how the moon works and what exactly happens to the token. This page describes the launch plan. Final parameters are set by the moon.cx factory, so verify them on the token page.',
+    title: 'MOON AI Documentation',
+    intro: 'How the project works, how the moon works and what happens to the token. This page describes the launch plan. Final parameters are set by the moon.cx factory, verify them on the token page.',
+    moreLabel: 'more',
+    tbdLabel: 'awaiting data',
     sections: [
-      { id: 'overview', title: 'What is MOON', p: [
-        'MOON is a memecoin on the moon.cx launchpad on TON. The token has no built-in utility: the value of the project is the story, a shared goal and an 8-bit universe around it.',
+      { id: 'overview', more: ["Memecoins live on community attention. That is why MOON AI invests not in promises but in what makes people want to come back: a story, an atmosphere and a shared goal.", "The project is built to be verifiable: all token parameters are set by the public moon.cx factory, and the site only displays data. If something on the site differs from moon.cx, trust moon.cx.", "The name MOON AI refers to the LUNA.AI character. It is not an AI product or a tech startup."], title: 'What is MOON AI', p: [
+        'MOON AI is a memecoin on the moon.cx launchpad on TON. The token has no built-in utility: the value of the project is the legend, a shared goal and a pixel universe around it.',
         'The site issues no tokens and stores nothing. It displays launchpad data and sends buyers to moon.cx.'] },
-      { id: 'story', title: 'The legend', p: [
-        'The core of the legend: the moon does not shine, it reflects. Once everyone looked at it, then they stopped, and it went dark over the black lake. At the edge of the world there is a black hole, the Oblivion: everything no one looks at anymore goes there. You see it on the site every time stars fall down as you scroll.',
-        'On the night of the new moon a black case with the letter M was found on the shore, with no sender. Inside was a blueprint and a line: "Light cannot be bought. It can only be gathered." The case was brought to the Watchers, an ancient order by the lake. They made a short pact: nobody walks in the dark alone. LUNA set the seal. In the morning a flag was raised on the shore, a beacon for those who look up.',
-        'The legend is simple: each moon phase opens a new chapter. The crescent reveals what is built in the shadow. The quarter answers what lies on the dark side. The gibbous brings guests from other shores. The full moon explains who left the case.',
-        'Why it works this way: a phase comes when enough eyes look up. The moon grows with everyone, not by anyone\'s will. We promise nothing but a direction.'] },
-      { id: 'phases', title: 'Moon phases', p: [
+      { id: 'story', more: ["The legend is written chapter by chapter, not released all at once. That gives the story a rhythm: new chapters appear when the moon actually grows.", "The images of the legend are not random. Reflected light, the Oblivion and the lights on the shore are metaphors for attention: what is looked at lives, and what is forgotten goes over the edge.", "The full canon of the legend is kept by the team so new chapters never contradict old ones."], title: 'The legend', p: [
+        'The core of the legend: the moon does not shine, it reflects. Once everyone looked at it, then they stopped, and it went dark over the black lake. At the edge of the world there is a black hole, the Oblivion: everything no one looks at anymore goes there.',
+        'On the night of the new moon a black case with the letter M was found on the shore, with no sender. Inside was a blueprint and a line: "Light cannot be bought. It can only be gathered." The case was brought to the Watchers, an ancient order by the lake. They made a short pact: nobody walks in the dark alone. LUNA set the seal.',
+        'Each moon phase opens a new chapter. A phase comes when enough eyes look up: the moon grows with everyone, not by anyone\'s will.'] },
+      { id: 'chapters', more: ["Each chapter has its own pixel art picture. Locked chapters are shown as a silhouette with a question mark so the plot is not revealed early.", "The rules of the world are also the principles of the project: we do not sell \"light\", we promise nothing but a direction, and we grow only together with the community."], title: 'Chapters and rules of the world', p: ['Chapters unlock as the moon grows. Locked chapters are shown as silhouettes on the site.'], extra: 'chapters', ul: [
+        'Light cannot be bought, it can only be gathered together.',
+        'Nobody promises anything but a direction.',
+        'A phase comes when enough eyes look up.',
+        'Nobody walks in the dark alone.',
+        'Light is in no hurry, but it always arrives.'] },
+      { id: 'phases', more: ["The five phases follow the real moon: new moon, crescent, quarter, gibbous and full moon. In reality a full lunar cycle takes about 29.5 days.", "The step between phases is always 500 GRAM. That makes progress easy to read: every new phase means the same contribution from the community.", "Until the site is connected to real progress, the moon is shown in demo mode."], title: 'Moon phases', p: [
         'The moon on the site is a visual indicator of bonding curve progress. It does not affect price or token economics.'], extra: 'phases' },
-      { id: 'curve', title: 'Bonding curve', p: [
+      { id: 'curve', more: ["A bonding curve is a common launchpad mechanic. Its strength is predictability: the price at any moment depends only on how much has been bought, and it cannot be changed by hand.", "Early buyers pay less than later ones because the price rises by formula. That is a property of the mechanic, not a promise of profit: the price can also fall if tokens are sold back into the curve.", "The exact shape of the curve is set by the moon.cx factory. Its parameters are visible on the token page."], title: 'Bonding curve', p: [
         'The token price is calculated by the curve formula and rises as people buy. The formula is the same for every participant, no exceptions.',
-        'Progress is counted in GRAM, the amount raised on the curve. When 2000 GRAM is reached, the curve completes.'], ul: [
+        'Progress is counted in GRAM. When 2000 GRAM is raised on the curve, the curve completes and the token moves to the pool.'], ul: [
         'a purchase moves the price up the curve;',
         'the price at any moment is defined only by the formula;',
         'progress is visible to everyone and matches the moon phase on the site.'] },
-      { id: 'launchpad', title: 'The moon.cx link', p: [
+      { id: 'launchpad', more: ["Launchpads like moon.cx handle the technical side of a launch: minting the token, trading on the curve and moving to the pool. The project does not need its own smart contract, which leaves less room for bugs and hidden functions.", "The flip side: launch rules are the same for every token on the platform. The project cannot change them."], title: 'The moon.cx link', p: [
         'The whole token lifecycle happens on the launchpad: creation through the factory, purchases on the curve, pool creation, liquidity lock.'], ul: [
-        'The moon.cx factory creates the token and the curve by shared rules. The project has no contract of its own.',
-        'The site reads curve progress and draws the moon phase.',
-        'Buying happens only on moon.cx, via the Buy button on the site.',
-        'After moving to the pool, liquidity is locked forever.'] },
-      { id: 'howtobuy', title: 'How to buy MOON', p: [
+        'the moon.cx factory creates the token and the curve by shared rules, the project has no contract of its own;',
+        'the site reads curve progress and draws the moon phase;',
+        'buying happens only on moon.cx, via the Buy button on the site;',
+        'after moving to the pool, liquidity is locked and only fees can be withdrawn from the pool.'] },
+      { id: 'gram', more: ["Different launchpads count curve progress differently: in the native network currency, in stablecoins or in separate units. moon.cx uses GRAM for this.", "This section will be updated as soon as exact data on GRAM is available."], title: 'What is GRAM', p: [
+        'GRAM is the unit moon.cx uses to count bonding curve progress. The pool threshold for MOON AI is 2000 GRAM.'],
+        tbd: ['how to get GRAM and which wallet holds it', 'the GRAM to TON ratio'] },
+      { id: 'fees', more: ["The TON network fee is usually small, but if your wallet has no TON at all, the transaction will fail. A good reserve is a few tenths of a TON.", "Launchpad fees are usually taken automatically on every trade on the curve. Exact numbers will be listed here."], title: 'Fees', p: [
+        'Any operation on TON requires a small network fee. Keep some TON in your wallet for gas.'],
+        tbd: ['moon.cx fee for buying and selling on the curve', 'pool fee after the curve completes'] },
+      { id: 'tokenomics', more: ["A fixed supply means no new tokens appear after the token is created. It is one of the basic signs of a fair memecoin.", "An 80/20 split is typical for launchpads: most tokens are sold on the curve, and a part is reserved for the pool so the token has liquidity right after the curve completes."], title: 'Tokenomics', p: ['Parameters of the moon.cx factory, the same for every token on the launchpad:'], extra: 'tokenomics' },
+      { id: 'launch', more: ["Activity is usually highest in the first minutes after launch. Do not rush: verify the address first, then buy.", "On launch day we will publish the address only in official channels. Any \"early addresses\" before that moment are fake."], title: 'Launch', p: [
+        'Everything about the token launch will appear here and in the official Telegram. What happens on launch day:'], ul: [
+        'we publish the contract address on the site and in our socials;',
+        'the curve on moon.cx opens for everyone at once;',
+        'the moon on the site starts growing with the progress.'],
+        tbd: ['launch date and time', 'ticker', 'contract address and token page link'] },
+      { id: 'howtobuy', more: ["If you are buying for the first time, make a small test transaction to get used to the wallet and launchpad interface.", "Save the token address in your wallet after buying: you will see your balance and will not confuse it with fakes."], title: 'How to buy MOON AI', p: [
         'Buying happens on the moon.cx launchpad. Below is the general order of steps. The platform interface may change, so follow the hints on moon.cx itself.'], ul: [
         'Install a wallet for the TON network (for example, Tonkeeper) and safely store the recovery phrase. Never show it to anyone.',
-        'Top up the wallet with the asset moon.cx accepts as payment and keep a small reserve for network fees.',
-        'Press Buy on moon.cx on this site or find MOON in the Launches section.',
-        'Compare the token address with the addresses at the end of the FAQ and only then confirm the purchase.',
+        'Top up the wallet with what moon.cx accepts as payment and keep some TON for network fees.',
+        'Press Buy on moon.cx on this site or find MOON AI in the Launches section.',
+        'Verify the token address using the "How to verify the contract" section, and only then confirm the purchase.',
         'Watch the moon: after buying, the phase on the site shows how far the curve has moved.'] },
-      { id: 'wallet', title: 'Wallet and safety', p: [
-        'Your wallet is the key to everything. The project never asks for a recovery phrase, password or private key, not on the site, not in chats, not in private messages.',
-        'Scammers love copying pretty sites. So bookmark the official site address and always verify contract addresses.'], ul: [
+      { id: 'verify', more: ["TON addresses usually start with EQ or UQ and are 48 characters long. Matching start and end characters are not a guarantee: scammers generate similar-looking addresses.", "The most reliable way is to copy the address from an official source and compare it in full, not just the first characters."], title: 'How to verify the contract', p: [
+        'Fakes love to copy the name and the picture. The real token differs only by its address, so verify exactly that.'], ul: [
+        'take the address only from this site (the FAQ section) or from the token page on moon.cx;',
+        'open a TON explorer, for example tonviewer.com or tonscan.org, and paste the address into search;',
+        'check the name, the ticker and the total supply of 1,000,000,000;',
+        'if the address differs by even one character, do not buy;',
+        'admins never send addresses in private messages.'] },
+      { id: 'wallet', more: ["A recovery phrase in TON wallets is usually 24 words. Whoever has it fully controls your wallet.", "Keep the phrase offline: on paper or in a trusted password manager. Screenshots and cloud notes are a common cause of lost funds."], title: 'Wallet and safety', p: [
+        'Your wallet is the key to everything. The project never asks for a recovery phrase, password or private key: not on the site, not in chats, not in private messages.'], ul: [
         'do not follow links from private messages and comments;',
         'do not connect your wallet to sites you do not trust;',
         'use a separate wallet for larger amounts;',
         'if an offer sounds too good, it is almost always a scam.'] },
-      { id: 'luna', title: 'LUNA.AI', p: [
-        'LUNA.AI is the pixel spirit of the MOON universe. It knows the current phase, how many GRAM are left until full moon, where to find the contracts and how to buy the token.',
-        'Right now LUNA.AI works by scripts: it recognizes keywords and answers with prepared phrases. We plan to connect a language model to make the conversation livelier.',
-        'LUNA.AI gives no financial advice and does not predict the price. If you ask about profit, it will remind you to be careful and suggest looking at the real moon.'] },
-      { id: 'roadmap', title: 'Plans', p: [
-        'These are directions we want to move in. They are plans, not promises: order and timing may change.'], ul: [
-        'token launch and opening the curve on moon.cx;',
-        'connecting real curve progress to the site;',
-        'a full moon event when moving to the pool;',
-        'LUNA.AI on a language model;',
-        'the "light a star" idea: every new holder adds a star to the sky on the site;',
-        'MOON.FM lofi radio with an original track.'] },
-      { id: 'tokenomics', title: 'Tokenomics', p: ['Distribution plan from the launch materials:'], extra: 'tokenomics' },
-      { id: 'faq', title: 'FAQ', extra: 'faq' },
-      { id: 'risks', title: 'Risks', p: [
-        'MOON is a new and volatile token. The price can change sharply, and you can lose everything you put in.'], ul: [
+      { id: 'links', more: ["Bookmark the official links and only use them. Fake sites often differ by a single letter in the address.", "If a link arrives in private messages from an \"admin\" or \"support\", it is a scam, even if the avatar and name match."], title: 'Official links', p: [
+        'There are no other official channels. If someone messages you privately on behalf of MOON AI, it is a scam.'], extra: 'links' },
+      { id: 'luna', more: ["LUNA answers hundreds of phrases in English and Russian: about the legend, phases, buying, safety and life in general. If you stay quiet, she may tell you something interesting on her own.", "Sometimes you can make LUNA laugh, feel sad or panic about low oxygen. Try the commands in the table above.", "Chats with LUNA are not saved or sent anywhere: everything runs right in your browser."], title: 'LUNA.AI', p: [
+        'LUNA.AI is a pixel astronaut and the voice of the legend. She knows the current phase, how much is left until full moon, where to find the contracts and how to buy the token.',
+        'Right now LUNA.AI works by scripts: she recognizes keywords and answers with prepared phrases. She gives no financial advice and does not predict the price.',
+        'The chat supports commands with "/":'], extra: 'commands' },
+      { id: 'roadmap', more: ["We deliberately do not put dates next to the items. In crypto, dates often turn into promises, and we try to promise only a direction.", "New items appear here as the project develops and the moon grows."], title: 'Plans', p: [
+        'These are directions, not promises: order and timing may change.'], ul: [
+        '[x] site, legend and chapter 0;',
+        '[x] LUNA.AI chat with mood events;',
+        '[x] MOON.FM radio;',
+        '[>] token launch on moon.cx;',
+        '[>] real curve progress on the site;',
+        '[ ] legend chapters 1–4 as the moon grows;',
+        '[ ] LUNA.AI on a language model;',
+        '[ ] a full moon event when moving to the pool.'] },
+      { id: 'faq', more: ["If your question is not on the list, ask LUNA.AI in the chat on the site or ask it in the official Telegram."], title: 'FAQ', extra: 'faq' },
+      { id: 'community', more: ["A good community is the main value of a memecoin. That is why the rules are simple and moderation is strict about spam and scams.", "If you notice suspicious activity or a fake channel, report it to the admins in the official Telegram."], title: 'Community rules', ul: [
+        'respect each other: no insults or harassment;',
+        'no spam and no promotion of other tokens;',
+        'no promises of multiples and no pressure on others;',
+        'admins never message first;',
+        'never share your recovery phrase and do not follow random links;',
+        'official links only, from the section above.'] },
+      { id: 'risks', more: ["Memecoin prices depend heavily on market mood and can move by tens of percent in a short time.", "Be careful with advice in chats and social media: nobody knows where the price will go. The decision is always yours."], title: 'Risks', p: [
+        'MOON AI is a new and volatile token. The price can change sharply, and you can lose everything you put in.'], ul: [
         'the site and docs are not investment advice;',
         'never invest more than you can afford to lose;',
         'verify addresses and parameters on moon.cx, not only on the site;',
-        'nobody from the project asks for your seed phrase or gives away tokens in private messages.'] },
-      { id: 'glossary', title: 'Glossary', extra: 'glossary' },
+        'nobody from the project asks for your recovery phrase or gives away tokens in private messages.'] },
+      { id: 'glossary', more: ["The glossary will grow as new legend chapters and site features appear."], title: 'Glossary', extra: 'glossary' },
     ],
-    tokenomics: [['Total supply', '1 000 000 000'], ['On the curve', '800 000 000'], ['Into the pool (added by the contract)', '200 000 000'], ['Pool threshold', '2000 GRAM'], ['Liquidity', 'locked forever']],
+    tokenomics: [['Total supply', '1 000 000 000'], ['On the curve', '800 000 000'], ['Into the pool (added by the contract)', '200 000 000'], ['Pool threshold', '2000 GRAM'], ['Liquidity', 'locked, only fees withdrawable']],
+    chaptersHead: ['Phase', 'GRAM', 'Chapter', 'Status'],
+    chapters: [
+      ['New moon', '0', 'Chapter 0. The silence before dawn', 'open'],
+      ['Crescent', '500', 'Chapter 1. What is built in the shadow', 'locked'],
+      ['Quarter', '1000', 'Chapter 2. Half of everything', 'locked'],
+      ['Gibbous', '1500', 'Chapter 3. Guests from other shores', 'locked'],
+      ['Full moon', '2000', 'Chapter 4. The moon remembers', 'locked'],
+    ],
+    linksHead: ['Where', 'Link'],
+    commandsHead: ['Command', 'What it does'],
+    commands: [
+      ['/help', 'list of commands'],
+      ['/sad', 'LUNA feels sad, pixel rain runs over the portrait'],
+      ['/confused', 'question marks pop over the helmet, the terminal shakes'],
+      ['/oxygen', 'alarm: oxygen is running low, the O2 tank drains'],
+      ['/joy', 'LUNA is happy, sparks burst from the helmet'],
+    ],
     glossary: [
-      ['GRAM', 'The unit that measures curve progress on moon.cx.'],
+      ['GRAM', 'The unit of bonding curve progress on moon.cx. More in the "What is GRAM" section.'],
       ['Bonding curve', 'A formula by which the token price rises with purchases.'],
       ['Jetton', 'The token standard on TON.'],
       ['Pool', 'The liquidity pair the token moves to after the curve.'],
-      ['Liquidity lock', 'Liquidity cannot be withdrawn: it is locked by a contract.'],
+      ['Liquidity lock', 'Pool liquidity is locked by a contract: only fees can be withdrawn.'],
+      ['Phase', 'The state of the moon on the site, reflecting curve progress.'],
+      ['Watchers', 'An ancient order by the lake from the legend. Anyone who looks up becomes a Watcher.'],
+      ['Oblivion', 'The black hole at the edge of the world where everything no one looks at goes.'],
     ],
     phasesHead: ['Raised', 'Phase'],
   },
-  disc: 'MOON is a new and volatile token. This site is not investment advice. Never invest more than you can afford to lose.',
+  disc: 'MOON AI is a new and volatile token. This site is not investment advice. Never invest more than you can afford to lose.',
 }

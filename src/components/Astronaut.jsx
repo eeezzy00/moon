@@ -1,38 +1,41 @@
 import { useMemo } from 'react'
 
-const N = 22
+const N = 24
+const C = 12 // центр шлема
 
-// Пиксельный скафандр (шлем + плечи) в палитре LUNA.AI. Рисуется процедурно по клеткам.
+// Пиксельный шлем скафандра без тела, в палитре LUNA.AI. Рисуется процедурно по клеткам.
 function colorAt(x, y) {
-  const dx = x + 0.5 - 11
-  const dy = y + 0.5 - 8.5
+  const dx = x + 0.5 - C
+  const dy = y + 0.5 - C
   const d = Math.hypot(dx, dy)
 
-  // зеркальные блики на стекле
-  const glints = ['7,5', '8,5', '7,6', '8,4', '14,6', '15,7']
-  if (glints.includes(`${x},${y}`)) return '#4DFFA0'
+  // антенна с огоньком сверху справа
+  if (x === 17 && y >= 1 && y <= 3) return '#168a74'
+  if ((x === 17 || x === 18) && y === 0) return '#4DFFA0'
 
-  const vx = dx / 5.6
-  const vy = (dy - 0.4) / 5.0
+  // боковые «ушки» шлема
+  if ((x <= 1 || x >= 22) && y >= 10 && y <= 14) return y === 10 ? '#9CFFD0' : y === 14 ? '#0d4a3c' : '#168a74'
+
+  // воротник шлема снизу
+  if (y >= 21 && y <= 23 && x >= 6 && x <= 17) {
+    if (y === 21) return '#9CFFD0'
+    return x === 6 || x === 17 ? '#0d4a3c' : '#168a74'
+  }
+
+  if (d > 10.4) return null
+
+  // блики на стекле
+  const glints = ['8,8', '9,8', '8,9', '9,7', '15,9', '16,10', '14,15']
+  if (glints.includes(`${x},${y}`)) return x > 13 ? '#2FD68A' : '#E3FFF1'
+
+  const vx = dx / 7
+  const vy = (dy - 0.6) / 6
   const v = vx * vx + vy * vy
-  if (d <= 8.4) {
-    if (v <= 1) return dy > 1.5 ? '#06261c' : '#03110c' // стекло визора
-    if (v <= 1.22) return '#0a241b'                      // кант визора
-    if (d > 7.4) return '#0d4a3c'                        // внешний контур шлема
-    const t = (dx + dy) / (d * 1.41 || 1)               // освещение с левого верхнего угла
-    return t < -0.4 ? '#9CFFD0' : t < 0.2 ? '#34E89A' : '#168a74'
-  }
-
-  if (y >= 16 && y <= 17 && x >= 8 && x <= 13) return y === 16 ? '#168a74' : '#0d4a3c' // шея
-  if (y >= 17) {
-    const half = 5 + (y - 17) * 1.7
-    if (Math.abs(dx) <= half) {
-      if (y === 17) return '#9CFFD0'
-      if (y >= 19 && y <= 20 && x >= 9 && x <= 12) return (x === 10 || x === 12) && y === 19 ? '#4DFFA0' : '#0a241b' // панель
-      return dx < -half * 0.45 ? '#E3FFF1' : dx > half * 0.45 ? '#7FA897' : '#BFE8D6'
-    }
-  }
-  return null
+  if (v <= 1) return dy > 2 ? '#06261c' : '#03110c' // стекло визора
+  if (v <= 1.2) return '#0a241b' // кант визора
+  if (d > 9.3) return '#0d4a3c' // внешний контур
+  const t = (dx + dy) / (d * 1.41 || 1) // свет сверху слева
+  return t < -0.4 ? '#9CFFD0' : t < 0.2 ? '#34E89A' : '#168a74'
 }
 
 export default function Astronaut({ size = 84 }) {

@@ -66,16 +66,19 @@ export default function CursorTrail() {
       if (steps === 0 && Math.random() > 0.6) spawn(mouse.x, mouse.y, 1)
       mouse.px = mouse.x
       mouse.py = mouse.y
+      wake()
       const h = Boolean(e.target.closest?.(INTERACTIVE))
       if (h !== hover) {
         hover = h
         ring.current.classList.toggle('cursor__ring--hover', h)
       }
     }
-    const onDown = () => { ring.current.classList.add('cursor__ring--down'); spawn(mouse.x, mouse.y, 14) }
+    const onDown = () => { ring.current.classList.add('cursor__ring--down'); spawn(mouse.x, mouse.y, 14); wake() }
     const onUp = () => { ring.current.classList.remove('cursor__ring--down') }
     const onLeave = () => { dot.current.style.opacity = ring.current.style.opacity = '0'; mouse.seen = false }
 
+    let running = false
+    const wake = () => { if (!running) { running = true; raf = requestAnimationFrame(frame) } }
     const frame = () => {
       lag.x += (mouse.x - lag.x) * 0.18
       lag.y += (mouse.y - lag.y) * 0.18
@@ -95,9 +98,10 @@ export default function CursorTrail() {
         ctx.fillRect(Math.round(p.x - s / 2), Math.round(p.y - s / 2), s, s)
       }
       ctx.globalAlpha = 1
+      const settled = parts.length === 0 && Math.abs(mouse.x - lag.x) < 0.3 && Math.abs(mouse.y - lag.y) < 0.3
+      if (settled) { running = false; return }
       raf = requestAnimationFrame(frame)
     }
-    raf = requestAnimationFrame(frame)
 
     window.addEventListener('mousemove', onMove, { passive: true })
     window.addEventListener('mousedown', onDown)
