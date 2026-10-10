@@ -932,7 +932,9 @@ html, body { overflow-x: clip; }
 }
 @media (max-width: 720px) {
   .logo { font-size: 14px; }
-  .radio__hint { position: fixed; top: 56px; left: 12px; right: auto; align-items: flex-start; padding: 0 0 0 52px; }
+  .radio__hint { position: fixed; top: 56px; left: 12px; right: auto; align-items: flex-start; padding: 0; max-width: calc(100vw - 24px); }
+  .radio__hint svg { margin-left: var(--ax, 0); }
+  .radio__hint span { white-space: normal; }
   .radio { padding: 3px 8px 3px 3px; gap: 6px; }
   .lang button { padding: 4px 7px; }
   .hero__moonwrap { margin-inline: auto; }
@@ -956,3 +958,27 @@ html, body { overflow-x: clip; }
   .nav > .nav__extra .btn, .nav > .nav__extra .btn:hover { color: #02140d; font-size: 15px; }
   .header:has(.nav--open) .radio__hint { display: none; }
 }
+
+/* большой регулятор громкости: луна выезжает из ползунка, пока её тянут */
+.radio__pop { position: fixed; z-index: 70; top: 64px; left: 50%; width: min(320px, calc(100vw - 32px)); margin-left: calc(min(320px, 100vw - 32px) / -2);
+  display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 22px 18px 18px; border-radius: 10px; touch-action: none; pointer-events: none;
+  background: rgba(3, 21, 15, .96); border: 1px solid rgba(138, 255, 196, .4); box-shadow: 0 24px 70px rgba(0, 0, 0, .75), 0 0 60px rgba(77, 255, 160, .22);
+  transform-origin: var(--ox, 50%) 0; animation: popin .28s var(--ease) both; }
+.radio__pop b { font: 400 18px var(--px); color: var(--moon); text-shadow: 0 0 14px rgba(77, 255, 160, .6); }
+.radio__ticks { display: flex; gap: 3px; align-items: flex-end; height: 22px; }
+.radio__ticks i { width: 6px; height: 8px; background: rgba(77, 255, 160, .18); transition: background .12s; }
+.radio__ticks i:nth-child(4n+1) { height: 14px; }
+.radio__ticks i.on { background: var(--moon); box-shadow: 0 0 6px rgba(77, 255, 160, .6); }
+@keyframes popin { from { opacity: 0; transform: scale(.2); } }
+.radio__moon { position: relative; z-index: 71; }
+
+@media (max-width: 720px) {
+  .fab { width: 56px; height: 56px; }
+  .fab > svg { width: 56px; height: 56px; }
+  .fab__arrow { right: 64px; }
+  .fab__arrow svg { width: 26px; height: 20px; }
+  .fab::before { inset: -14px; }
+  .bh__core-svg { width: 56px; height: 56px; }
+  .hero__stat canvas, .hero__stat svg { flex: none; }
+}
+.hero__stat > svg { flex: none; margin-right: 2px; }

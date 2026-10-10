@@ -27,6 +27,8 @@ export default function Preloader() {
   const [gone, setGone] = useState(false)
   const target = useRef(0)
   const skipped = useRef(false)
+  // луна на экране загрузки каждый раз новая: случайная фаза, процент загрузки идёт отдельно
+  const [lunaLit] = useState(() => [0.12, 0.25, 0.4, 0.5, 0.65, 0.8, 1][Math.floor(Math.random() * 7)])
 
   useEffect(() => {
     const root = document.documentElement
@@ -95,7 +97,7 @@ export default function Preloader() {
       <div className="loader__glow" style={{ opacity: 0.35 + shown * 0.65 }} />
       <div className="loader__center">
         <div className="loader__moon">
-          <HeroMoon lit={shown} size={280} />
+          <HeroMoon lit={lunaLit} size={280} />
         </div>
         <div className="loader__text">
           LOADING<span className="loader__dots"><i>.</i><i>.</i><i>.</i></span>

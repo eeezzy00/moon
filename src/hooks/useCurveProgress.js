@@ -3,10 +3,14 @@ import { CONFIG } from '../lib/config'
 
 // Возвращает прогресс кривой в GRAM.
 // Если задан VITE_PROGRESS_URL — опрашивает его раз в 30 с.
-// Иначе демо: значение из ?gram=1200 в адресной строке (по умолчанию 750).
+// Иначе демо: значение из ?gram=1200 в адресной строке (по умолчанию CONFIG.demoGram).
+const MOONS = { new: 0, crescent: 500, quarter: 1000, gibbous: 1500, full: 2000 }
 function demoGram() {
-  const v = Number(new URLSearchParams(window.location.search).get('gram'))
-  return Number.isFinite(v) && v >= 0 ? Math.min(v, CONFIG.maxGram) : 750
+  const q = new URLSearchParams(window.location.search)
+  if (q.get('moon') in MOONS) return MOONS[q.get('moon')]
+  const raw = q.get('gram')
+  const v = raw === null || raw === '' ? NaN : Number(raw)
+  return Number.isFinite(v) && v >= 0 ? Math.min(v, CONFIG.maxGram) : CONFIG.demoGram
 }
 
 export function useCurveProgress() {

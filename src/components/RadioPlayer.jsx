@@ -38,6 +38,10 @@ export default function RadioPlayer() {
   const [playing, setPlaying] = useState(false)
   const [volume, setVolume] = useState(savedVolume)
   const [hintOn, setHintOn] = useState(false)
+  const [arrowX, setArrowX] = useState(0) // положение стрелки-подсказки над луной-ползунком (телефон)
+  const [drag, setDrag] = useState(null) // { ox }: пока тянут громкость, луна увеличивается в большой регулятор
+  const pop = useRef(null)
+  const start = useRef({ x: 0, v: 0, big: false })
 
   // Подсказка со стрелкой «тут выключить звук»: один раз за сессию, после вступления
   useEffect(() => {
@@ -138,6 +142,13 @@ export default function RadioPlayer() {
     }
   }, [])
 
+  // стрелка-подсказка смотрит ровно на луну-ползунок, где бы та ни стояла
+  useEffect(() => {
+    if (!hintOn || !dial.current) return
+    const r = dial.current.getBoundingClientRect()
+    setArrowX(Math.max(0, r.left + r.width / 2 - 12 - 13.5))
+  }, [hintOn])
+
   const toggle = () => {
     const a = audio.current
     if (!a) return
@@ -152,12 +163,32 @@ export default function RadioPlayer() {
   }
 
   // громкость = доля света на луне: слева 0 (новолуние), справа 1 (полнолуние)
-  const setFromPointer = (e) => {
+  const snap = (v) => Math.round(Math.min(1, Math.max(0, v)) * 20) / 20
+  const fromDial = (e) => {
     const r = dial.current.getBoundingClientRect()
-    setVolume(Math.round(Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)) * 20) / 20)
+    return snap((e.clientX - r.left) / r.width)
   }
-  const onDown = (e) => { e.currentTarget.setPointerCapture(e.pointerId); setFromPointer(e) }
-  const onMove = (e) => { if (e.buttons) setFromPointer(e) }
+  // На телефоне маленькую луну неудобно двигать пальцем: пока тянут, она «выезжает» крупным регулятором,
+  // и громкость меняется относительно того места, где начали
+  const onDown = (e) => {
+    e.currentTarget.setPointerCapture(e.pointerId)
+    const v = fromDial(e)
+    setVolume(v)
+    const big = e.pointerType === 'touch' || window.matchMedia('(max-width: 900px)').matches
+    start.current = { x: e.clientX, v, big }
+    if (big) {
+      const r = dial.current.getBoundingClientRect()
+      const w = Math.min(320, window.innerWidth - 32)
+      setDrag({ ox: r.left + r.width / 2 - (window.innerWidth - w) / 2 })
+    }
+  }
+  const onMove = (e) => {
+    if (!e.buttons) return
+    const s = start.current
+    if (s.big && pop.current) setVolume(snap(s.v + (e.clientX - s.x) / (pop.current.getBoundingClientRect().width * 0.7)))
+    else setVolume(fromDial(e))
+  }
+  const onUp = () => setDrag(null)
   const onKey = (e) => {
     const step = e.key === 'ArrowRight' || e.key === 'ArrowUp' ? 0.05 : e.key === 'ArrowLeft' || e.key === 'ArrowDown' ? -0.05 : 0
     if (!step) return
@@ -168,7 +199,7 @@ export default function RadioPlayer() {
   return (
     <div className={`radio ${playing ? 'radio--on' : ''}`} onPointerDown={() => setHintOn(false)}>
       {hintOn && (
-        <div className="radio__hint" role="status">
+        <div className="radio__hint" role="status" style={{ '--ax': `${arrowX}px` }}>
           <svg viewBox="0 0 9 9" width="27" height="27" shapeRendering="crispEdges" aria-hidden="true">
             <rect x="4" y="0" width="1" height="1" fill="#E3FFF1" />
             <rect x="3" y="1" width="3" height="1" fill="#8AFFC4" />
@@ -205,10 +236,19 @@ export default function RadioPlayer() {
         aria-valuenow={Math.round(volume * 100)}
         onPointerDown={onDown}
         onPointerMove={onMove}
+        onPointerUp={onUp}
+        onPointerCancel={onUp}
         onKeyDown={onKey}
       >
         <PixelMoon lit={volume} size={34} flip flat />
       </div>
+      {drag && (
+        <div className="radio__pop" ref={pop} style={{ '--ox': `${drag.ox}px` }} aria-hidden="true">
+          <PixelMoon lit={volume} size={150} flip flat />
+          <b>{Math.round(volume * 100)}%</b>
+          <span className="radio__ticks">{Array.from({ length: 21 }, (_, i) => <i key={i} className={i / 20 <= volume + 0.001 ? 'on' : ''} />)}</span>
+        </div>
+      )}
     </div>
   )
 }

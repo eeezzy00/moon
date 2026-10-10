@@ -3,6 +3,7 @@ import { useLang } from '../i18n'
 import { CONFIG } from '../lib/config'
 import { phaseIndex, percent } from '../lib/phases'
 import HeroMoon from './HeroMoon'
+import PixelMoon from './PixelMoon'
 import Cosmos from './Cosmos'
 import SplitText from './SplitText'
 import Astronaut from './Astronaut'
@@ -32,7 +33,7 @@ export default function Hero({ gram }) {
           </div>
           <SocialLinks className="hero__social hero__in" />
           <div className="hero__stat hero__in" style={{ '--d': '3.1s' }}>
-            <i /> <span>{t.phl[phase]}</span> · {percent(gram)}% {t.curve.toLowerCase()}
+            <PixelMoon phase={phase} size={26} /> <span>{t.phl[phase]}</span> · {percent(gram)}% {t.curve.toLowerCase()}
           </div>
         </div>
         <div className="hero__moonwrap hero__in" style={{ '--d': '0s' }}>
