@@ -876,7 +876,6 @@ a.gal__card { text-decoration: none; }
 }
 @media (max-width: 760px) { .trail__layer { display: none; } }
 @media (max-width: 720px) {
-  .nav { display: none; }
   .dterm__grid { grid-template-columns: 1fr; }
   .docs__toc { position: static; max-height: 260px; border-right: 0; border-bottom: 1px solid var(--line); }
   .docs__body { padding: 20px 18px 30px; }
@@ -906,3 +905,54 @@ a.gal__card { text-decoration: none; }
 .footer__intro { padding: 7px 14px; border: 1px solid rgba(138, 255, 196, .22); border-radius: 5px; color: var(--muted); font-size: 14px; text-decoration: none; transition: color .25s, border-color .25s, box-shadow .25s; }
 .footer__intro:hover { color: var(--moon); border-color: rgba(138, 255, 196, .55); box-shadow: 0 0 22px rgba(77, 255, 160, .22); }
 @media (max-width: 720px) { .footer__side { align-items: flex-start; } }
+
+/* ---------- Телефоны ---------- */
+html, body { overflow-x: clip; }
+.burger, .nav__extra { display: none; }
+@media (max-width: 900px) {
+  .header__row { flex-wrap: nowrap; gap: 10px; }
+  .header__right { gap: 8px; margin-left: auto; }
+  .header__buy, .header__right .socials { display: none; }
+  .logo { white-space: nowrap; }
+  .burger { display: grid; align-content: center; justify-items: center; gap: 4px; width: 38px; height: 34px; padding: 0; border: 1px solid rgba(77, 255, 160, .22); border-radius: 6px; background: rgba(4, 17, 12, .7); cursor: pointer; transition: border-color .25s, box-shadow .25s; }
+  .burger i { display: block; width: 16px; height: 2px; background: var(--moon); box-shadow: 0 0 6px rgba(77, 255, 160, .7); transition: transform .3s var(--ease), opacity .2s; }
+  .burger--on { border-color: rgba(138, 255, 196, .6); box-shadow: 0 0 18px rgba(77, 255, 160, .25); }
+  .burger--on i:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .burger--on i:nth-child(2) { opacity: 0; }
+  .burger--on i:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+  .nav { display: flex; flex-direction: column; gap: 0; position: absolute; left: 16px; right: 16px; top: calc(100% + 4px); padding: 8px 18px 16px; border-radius: 8px;
+    background: #03150f; border: 1px solid rgba(138, 255, 196, .28); box-shadow: 0 18px 50px rgba(0, 0, 0, .7), 0 0 40px rgba(77, 255, 160, .12);
+    opacity: 0; visibility: hidden; transform: translateY(-8px); transition: opacity .3s var(--ease), transform .3s var(--ease), visibility 0s .3s; }
+  .nav--open { opacity: 1; visibility: visible; transform: none; transition: opacity .3s var(--ease), transform .3s var(--ease), visibility 0s; }
+  .nav > a { padding: 14px 0; font-size: 18px; border-bottom: 1px solid rgba(138, 255, 196, .1); }
+  .nav > a::after { display: none; }
+  .nav__extra { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 16px; }
+  .nav__extra .socials { display: flex; }
+  .nav__extra .btn { flex: 1; }
+}
+@media (max-width: 720px) {
+  .logo { font-size: 14px; }
+  .radio__hint { position: fixed; top: 56px; left: 12px; right: auto; align-items: flex-start; padding: 0 0 0 52px; }
+  .radio { padding: 3px 8px 3px 3px; gap: 6px; }
+  .lang button { padding: 4px 7px; }
+  .hero__moonwrap { margin-inline: auto; }
+  h1 { word-break: break-word; }
+}
+@media (max-width: 720px) {
+  .dterm, .dterm__grid, .docs__body, .docs__toc { min-width: 0; max-width: 100%; }
+  .dterm__grid { grid-template-columns: minmax(0, 1fr); }
+  .dterm__grid > * { min-width: 0; }
+  .docs__body { overflow-wrap: anywhere; }
+  .docs__body .table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .docs__body pre, .docs__body code { white-space: pre-wrap; overflow-wrap: anywhere; }
+  .dterm__path, .dterm__fname, .dterm__ftitle { overflow-wrap: anywhere; }
+}
+@media (max-width: 720px) {
+  .docs__body .table { overflow-wrap: normal; word-break: normal; }
+  .docs__body .table th, .docs__body .table td { padding: 8px 10px; font-size: 14px; }
+  .docs__body .table td:first-child, .docs__body .table th:first-child { white-space: nowrap; }
+}
+@media (max-width: 900px) {
+  .nav > .nav__extra .btn, .nav > .nav__extra .btn:hover { color: #02140d; font-size: 15px; }
+  .header:has(.nav--open) .radio__hint { display: none; }
+}
