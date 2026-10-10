@@ -20,6 +20,7 @@ import LunaChat from './components/LunaChat'
 import LunaFab from './components/LunaFab'
 import Token from './components/Token'
 import Gallery from './components/Gallery'
+import JoinUs from './components/JoinUs'
 import DocsCta from './components/DocsCta'
 import Footer from './components/Footer'
 
@@ -51,6 +52,7 @@ export default function App() {
           <Launchpad />
           <LunaTeaser onOpen={openChat} />
           <Token />
+          <JoinUs />
           <DocsCta />
         </main>
         <Footer />
