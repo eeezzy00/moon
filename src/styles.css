@@ -982,3 +982,23 @@ html, body { overflow-x: clip; }
   .hero__stat canvas, .hero__stat svg { flex: none; }
 }
 .hero__stat > svg { flex: none; margin-right: 2px; }
+
+/* ---------- Станции и треки MOON.FM ---------- */
+.radio__list { width: 26px; height: 26px; border: 0; border-radius: 5px; background: none; color: var(--muted); display: grid; place-items: center; flex: none; cursor: pointer; transition: color .2s, background .2s; }
+.radio__list svg { fill: currentColor; }
+.radio__list:hover, .radio__list.on { color: var(--moon); background: rgba(77, 255, 160, .12); }
+.radio__panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 30; width: 320px; max-height: min(60vh, 440px); overflow-y: auto; padding: 14px; border-radius: 8px;
+  background: #03150f; border: 1px solid rgba(138, 255, 196, .3); box-shadow: 0 20px 60px rgba(0, 0, 0, .75), 0 0 40px rgba(77, 255, 160, .14); animation: hintin .3s var(--ease) both; }
+.radio__ptop { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.radio__ptop b { font: 400 13px var(--px); color: var(--moon); letter-spacing: 2px; }
+.radio__ptop span { display: flex; gap: 6px; }
+.radio__ptop button { width: 30px; height: 28px; border: 1px solid rgba(138, 255, 196, .25); border-radius: 5px; background: rgba(4, 17, 12, .7); color: var(--moon); font-size: 16px; cursor: pointer; }
+.radio__ptop button:hover { border-color: rgba(138, 255, 196, .6); }
+.radio__st p { display: flex; justify-content: space-between; margin: 12px 0 4px; font: 700 13px var(--body); letter-spacing: .12em; text-transform: uppercase; color: var(--teal); }
+.radio__st p em { font-style: normal; color: var(--dim); }
+.radio__st > button { display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 8px; border: 0; border-radius: 5px; background: none; color: var(--muted); font: 500 16px var(--body); text-align: left; cursor: pointer; }
+.radio__st > button i { width: 14px; font-style: normal; color: var(--dim); }
+.radio__st > button:hover { background: rgba(77, 255, 160, .08); color: var(--text); }
+.radio__st > button.on { color: var(--moon); background: rgba(77, 255, 160, .12); }
+.radio__st > button.on i { color: var(--moon); }
+@media (max-width: 720px) { .radio__panel { position: fixed; top: 56px; left: 12px; right: 12px; width: auto; } }

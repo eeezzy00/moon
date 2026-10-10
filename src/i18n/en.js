@@ -108,6 +108,7 @@ export default {
     },
   },
   tgEarly: 'Telegram · early access', followUs: 'Follow us',
+  radioMenu: 'Stations and tracks', radioNext: 'Next track', radioPrev: 'Previous track',
   radioHintOn: 'Drag the moon for volume, or pause here', radioHintOff: 'You can turn the music on here',
   navGallery: 'Gallery', galK: 'GALLERY', galH: 'MOON AI art',
   galP: 'Quiet scenes from our universe: rain, a lamp, books and a cat watching the moon. The rest is in the full gallery, each with a line about the sky.',

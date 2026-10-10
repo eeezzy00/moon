@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLang } from '../i18n'
 import PixelMoon from './PixelMoon'
-import track from '../../music/velariomusic-calm-ambient-603158.mp3?url'
+import { STATIONS, ALL_TRACKS } from '../lib/radio'
 
 const STORAGE_KEY = 'moonfm-volume'
-const TIME_KEY = 'moonfm-time'
+const TIME_KEY = 'moonfm-time' // "id трека|секунды": продолжаем с того же места только тот же трек
+const TRACK_KEY = 'moonfm-track' // последний трек
 const PAUSED_KEY = 'moonfm-paused' // пауза, поставленная пользователем (на время сессии)
 const OWNER_KEY = 'moonfm-owner' // вкладка, в которой играет музыка: { id, ts }
 const HINT_KEY = 'moonfm-hint' // подсказка уже показывалась в этой сессии
@@ -22,6 +23,14 @@ const otherTabOwns = () => {
 const claim = () => { try { localStorage.setItem(OWNER_KEY, JSON.stringify({ id: TAB_ID, ts: Date.now() })) } catch {} }
 const isOwner = () => readOwner()?.id === TAB_ID
 
+function savedTrack() {
+  try {
+    const t = ALL_TRACKS.find((x) => x.id === localStorage.getItem(TRACK_KEY))
+    if (t) return t
+  } catch {}
+  return ALL_TRACKS[0] || null
+}
+
 function savedVolume() {
   try {
     const v = parseFloat(localStorage.getItem(STORAGE_KEY))
@@ -38,6 +47,10 @@ export default function RadioPlayer() {
   const [playing, setPlaying] = useState(false)
   const [volume, setVolume] = useState(savedVolume)
   const [hintOn, setHintOn] = useState(false)
+  const [cur, setCur] = useState(savedTrack) // текущий трек плейлиста
+  const [panel, setPanel] = useState(false) // список станций и треков
+  const curId = useRef(cur?.id)
+  curId.current = cur?.id
   const [arrowX, setArrowX] = useState(0) // положение стрелки-подсказки над луной-ползунком (телефон)
   const [drag, setDrag] = useState(null) // { ox }: пока тянут громкость, луна увеличивается в большой регулятор
   const pop = useRef(null)
@@ -77,8 +90,9 @@ export default function RadioPlayer() {
     const userPaused = () => { try { return sessionStorage.getItem(PAUSED_KEY) === '1' } catch { return false } }
     const onMeta = () => {
       try {
-        const t = parseFloat(localStorage.getItem(TIME_KEY))
-        if (t > 0 && t < a.duration - 1) a.currentTime = t
+        const [id, sec] = (localStorage.getItem(TIME_KEY) || '').split('|')
+        const t = parseFloat(sec)
+        if (id === curId.current && t > 0 && t < a.duration - 1) a.currentTime = t
       } catch {}
     }
     const onPlay = () => setPlaying(true)
@@ -124,7 +138,7 @@ export default function RadioPlayer() {
     const release = () => { try { if (isOwner()) localStorage.removeItem(OWNER_KEY) } catch {} }
     window.addEventListener('pagehide', release)
 
-    const save = () => { try { if (a.currentTime > 0) localStorage.setItem(TIME_KEY, String(a.currentTime)) } catch {} }
+    const save = () => { try { if (a.currentTime > 0) localStorage.setItem(TIME_KEY, `${curId.current}|${a.currentTime}`) } catch {} }
     const id = setInterval(save, 2000)
     window.addEventListener('pagehide', save)
     return () => {
@@ -148,6 +162,33 @@ export default function RadioPlayer() {
     const r = dial.current.getBoundingClientRect()
     setArrowX(Math.max(0, r.left + r.width / 2 - 12 - 13.5))
   }, [hintOn])
+
+  // переключение треков: плейлист идёт по кругу по всем станциям, в панели можно выбрать любой
+  const replay = () => { const a = audio.current; if (a) { a.currentTime = 0; a.play().catch(() => {}) } }
+  const pick = (tr) => {
+    const a = audio.current
+    if (!a || !tr) return
+    try { localStorage.setItem(TRACK_KEY, tr.id); sessionStorage.removeItem(PAUSED_KEY) } catch {}
+    claim()
+    curId.current = tr.id
+    setCur(tr)
+    a.src = tr.src // подмена до рендера, чтобы play() сразу играл новый трек
+    a.currentTime = 0
+    a.play().catch(() => {})
+  }
+  const go = (d) => {
+    if (ALL_TRACKS.length < 2) return replay()
+    const i = ALL_TRACKS.findIndex((x) => x.id === curId.current)
+    pick(ALL_TRACKS[(i + d + ALL_TRACKS.length) % ALL_TRACKS.length])
+  }
+
+  useEffect(() => {
+    if (!panel) return
+    const close = (e) => { if (e.key === 'Escape' || (e.type === 'pointerdown' && !e.target.closest?.('.radio'))) setPanel(false) }
+    window.addEventListener('keydown', close)
+    window.addEventListener('pointerdown', close)
+    return () => { window.removeEventListener('keydown', close); window.removeEventListener('pointerdown', close) }
+  }, [panel])
 
   const toggle = () => {
     const a = audio.current
@@ -210,7 +251,7 @@ export default function RadioPlayer() {
           <span>{playing ? t.radioHintOn : t.radioHintOff}</span>
         </div>
       )}
-      <audio ref={audio} src={track} loop preload="none" />
+      <audio ref={audio} src={cur?.src} preload="none" onEnded={() => go(1)} />
       <button className="radio__btn" onClick={toggle} aria-label={playing ? t.radioPause : t.radioPlay} title={playing ? t.radioPause : t.radioPlay}>
         <svg viewBox="0 0 8 8" width="14" height="14" shapeRendering="crispEdges" aria-hidden="true">
           {playing
@@ -218,8 +259,15 @@ export default function RadioPlayer() {
             : <><rect x="2" y="1" width="1" height="6" /><rect x="3" y="2" width="1" height="4" /><rect x="4" y="2" width="1" height="4" /><rect x="5" y="3" width="1" height="2" /></>}
         </svg>
       </button>
+      {ALL_TRACKS.length > 0 && (
+        <button className={`radio__list ${panel ? 'on' : ''}`} onClick={() => setPanel((p) => !p)} aria-label={t.radioMenu} aria-expanded={panel} title={t.radioMenu}>
+          <svg viewBox="0 0 8 8" width="14" height="14" shapeRendering="crispEdges" aria-hidden="true">
+            <rect x="0" y="1" width="8" height="1" /><rect x="0" y="3" width="8" height="1" /><rect x="0" y="5" width="5" height="1" /><rect x="6" y="5" width="2" height="2" />
+          </svg>
+        </button>
+      )}
       <div className="radio__info">
-        <b>MOON.FM</b>
+        <b>{STATIONS.find((s) => s.tracks.includes(cur))?.name || 'MOON.FM'}</b>
         <span className="radio__eq" aria-hidden="true">
           {[0, 1, 2, 3, 4].map((i) => <i key={i} className={playing ? 'on' : ''} style={{ animationDelay: `${i * 0.13}s` }} />)}
         </span>
@@ -242,6 +290,27 @@ export default function RadioPlayer() {
       >
         <PixelMoon lit={volume} size={34} flip flat />
       </div>
+      {panel && (
+        <div className="radio__panel" role="dialog" aria-label={t.radioMenu}>
+          <div className="radio__ptop">
+            <b>MOON.FM</b>
+            <span>
+              <button onClick={() => go(-1)} aria-label={t.radioPrev} title={t.radioPrev}>◂</button>
+              <button onClick={() => go(1)} aria-label={t.radioNext} title={t.radioNext}>▸</button>
+            </span>
+          </div>
+          {STATIONS.map((s) => (
+            <div key={s.id} className="radio__st">
+              <p>{s.name}<em>{s.tracks.length}</em></p>
+              {s.tracks.map((tr) => (
+                <button key={tr.id} className={tr.id === cur?.id ? 'on' : ''} onClick={() => pick(tr)}>
+                  <i aria-hidden="true">{tr.id === cur?.id && playing ? '♪' : '▸'}</i>{tr.title}
+                </button>
+              ))}
+            </div>
+          ))}
+        </div>
+      )}
       {drag && (
         <div className="radio__pop" ref={pop} style={{ '--ox': `${drag.ox}px` }} aria-hidden="true">
           <PixelMoon lit={volume} size={150} flip flat />
