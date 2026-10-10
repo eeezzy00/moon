@@ -7,6 +7,8 @@ export default defineConfig({
   plugins: [react()],
   // папка music лежит в корне проекта; её файлы могут быть заняты другими программами (EBUSY)
   server: { watch: { ignored: ['**/music/**'] } },
+  // Railway отдаёт сайт на своём домене: без этого vite preview отвечает 403 на чужой Host
+  preview: { allowedHosts: true },
   build: {
     rollupOptions: {
       input: {
