@@ -7,6 +7,16 @@ const IMAGES = ['/moon.png', '/luna.png', '/luna-talk.png', '/how.png', '/how2.p
 const MIN_MS = 1600 // луна растёт не быстрее, чтобы анимацию успели увидеть
 const MAX_MS = 7000 // страховка: показать сайт, даже если что-то не загрузилось
 
+// Вступление после загрузки: сначала луна, потом текст, кнопки, и только затем шапка и весь остальной сайт.
+// Пока висит класс intro, остальное скрыто (см. стили); при «уменьшении движения» вступление пропускается.
+const INTRO_MS = 4200
+function startIntro(root) {
+  root.classList.remove('is-loading')
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+  root.classList.add('intro')
+  setTimeout(() => root.classList.remove('intro'), INTRO_MS)
+}
+
 // Загрузка в виде луны: от новолуния до полнолуния по мере загрузки, затем мягко растворяется.
 // Пока на <html> висит класс is-loading, анимации первого экрана стоят на паузе.
 export default function Preloader() {
@@ -19,7 +29,9 @@ export default function Preloader() {
     const root = document.documentElement
     // ?noload в адресе пропускает загрузку (удобно для скриншотов и отладки)
     if (new URLSearchParams(window.location.search).has('noload')) {
-      root.classList.remove('is-loading')
+      // ?noload&intro: без загрузки, но с вступлением (для проверки порядка появления)
+      if (new URLSearchParams(window.location.search).has('intro')) startIntro(root)
+      else root.classList.remove('is-loading')
       setGone(true)
       return
     }
@@ -45,7 +57,7 @@ export default function Preloader() {
         finished = true
         setTimeout(() => {
           setLeaving(true)
-          root.classList.remove('is-loading')
+          startIntro(root)
           setTimeout(() => setGone(true), 1000)
         }, 260)
         return

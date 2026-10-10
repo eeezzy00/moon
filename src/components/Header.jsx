@@ -4,9 +4,9 @@ import RadioPlayer from './RadioPlayer'
 import { SocialIcons } from './Socials'
 
 // docs=true: шапка на странице документации, якоря ведут на главную
-export default function Header({ docs = false }) {
+export default function Header({ docs = false, gallery = false }) {
   const { t, lang, setLang } = useLang()
-  const p = docs ? '/' : ''
+  const p = docs || gallery ? '/' : ''
   return (
     <header className="header">
       <div className="container header__row">
@@ -14,6 +14,9 @@ export default function Header({ docs = false }) {
         <nav className="nav">
           <a href={`${p}#about`}>{t.navAbout}</a>
           <a href={`${p}#phases`}>{t.navPhases}</a>
+          {gallery
+            ? <a href="/gallery/" aria-current="page" className="nav__on">{t.navGallery}</a>
+            : <a href={`${p}#gallery`}>{t.navGallery}</a>}
           <a href={`${p}#luna`}>LUNA.AI</a>
           <a href={`${p}#token`}>{t.navToken}</a>
           {docs

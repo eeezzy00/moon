@@ -1,7 +1,7 @@
 // Единое место для параметров проекта. Всё «рабочее» (имя, тикер, ссылка, адреса) меняется здесь.
 export const CONFIG = {
   name: 'MOON AI',
-  ticker: '[TICKER]',
+  ticker: '$MOONAI',
   launchUrl: 'https://moon.cx',
   docsUrl: 'https://moon.cx/docs',
   socials: {

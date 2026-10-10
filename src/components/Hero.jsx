@@ -23,19 +23,19 @@ export default function Hero({ gram }) {
       <div className="container hero__row">
         <div className="hero__text">
           {phase === 4 && <span className="badge">{t.fullBadge}</span>}
-          <p className="kicker hero__in" style={{ '--d': '.1s' }}>{t.kicker}</p>
-          <SplitText key={t.h1} as="h1" text={t.h1} delay={0.25} />
-          <p className="lead hero__in" style={{ '--d': '.9s' }}>{t.sub}</p>
-          <div className="hero__cta hero__in" style={{ '--d': '1.15s' }}>
+          <p className="kicker hero__in" style={{ '--d': '1.1s' }}>{t.kicker}</p>
+          <SplitText key={t.h1} as="h1" text={t.h1} delay={1.3} />
+          <p className="lead hero__in" style={{ '--d': '2.1s' }}>{t.sub}</p>
+          <div className="hero__cta hero__in" style={{ '--d': '2.6s' }}>
             <a className="btn" href={CONFIG.launchUrl} target="_blank" rel="noreferrer">{t.cta1}</a>
             <a className="btn btn--ghost" href="#how">{t.cta2}</a>
           </div>
           <SocialLinks className="hero__social hero__in" />
-          <div className="hero__stat hero__in" style={{ '--d': '1.35s' }}>
+          <div className="hero__stat hero__in" style={{ '--d': '3.1s' }}>
             <i /> <span>{t.phl[phase]}</span> · {percent(gram)}% {t.curve.toLowerCase()}
           </div>
         </div>
-        <div className="hero__moonwrap hero__in" style={{ '--d': '.5s' }}>
+        <div className="hero__moonwrap hero__in" style={{ '--d': '0s' }}>
           <div className="halo" />
           <div className="halo halo--2" />
           <div className="bob"><HeroMoon lit={heroLit} size={360} /></div>

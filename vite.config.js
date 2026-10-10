@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { resolve } from 'node:path'
 
-// Две страницы: лендинг (/) и документация (/docs/)
+// Три страницы: лендинг (/), документация (/docs/) и галерея (/gallery/)
 export default defineConfig({
   plugins: [react()],
   // папка music лежит в корне проекта; её файлы могут быть заняты другими программами (EBUSY)
@@ -12,6 +12,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         docs: resolve(__dirname, 'docs/index.html'),
+        gallery: resolve(__dirname, 'gallery/index.html'),
       },
     },
   },

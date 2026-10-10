@@ -7,6 +7,7 @@ const STORAGE_KEY = 'moonfm-volume'
 const TIME_KEY = 'moonfm-time'
 const PAUSED_KEY = 'moonfm-paused' // пауза, поставленная пользователем (на время сессии)
 const OWNER_KEY = 'moonfm-owner' // вкладка, в которой играет музыка: { id, ts }
+const HINT_KEY = 'moonfm-hint' // подсказка уже показывалась в этой сессии
 const OWNER_TTL = 5000 // вкладка считается живой, пока обновляет метку чаще этого
 const TAB_ID = Math.random().toString(36).slice(2)
 
@@ -36,6 +37,27 @@ export default function RadioPlayer() {
   const dial = useRef(null)
   const [playing, setPlaying] = useState(false)
   const [volume, setVolume] = useState(savedVolume)
+  const [hintOn, setHintOn] = useState(false)
+
+  // Подсказка со стрелкой «тут выключить звук»: один раз за сессию, после вступления
+  useEffect(() => {
+    try { if (sessionStorage.getItem(HINT_KEY)) return } catch {}
+    const root = document.documentElement
+    const busy = () => root.classList.contains('is-loading') || root.classList.contains('intro')
+    let t1, t2, mo
+    const show = () => {
+      t1 = setTimeout(() => {
+        setHintOn(true)
+        try { sessionStorage.setItem(HINT_KEY, '1') } catch {}
+        t2 = setTimeout(() => setHintOn(false), 10000)
+      }, 2400)
+    }
+    if (busy()) {
+      mo = new MutationObserver(() => { if (!busy()) { mo.disconnect(); show() } })
+      mo.observe(root, { attributes: true, attributeFilter: ['class'] })
+    } else show()
+    return () => { clearTimeout(t1); clearTimeout(t2); mo?.disconnect() }
+  }, [])
 
   useEffect(() => {
     if (audio.current) audio.current.volume = volume
@@ -70,10 +92,22 @@ export default function RadioPlayer() {
     }
     const off = () => events.forEach((ev) => window.removeEventListener(ev, unlock, true))
 
-    if (!userPaused() && !otherTabOwns()) {
+    // Музыка стартует, как только закончились загрузка и вступление. Если браузер не разрешает звук,
+    // слушаем первое действие пользователя и включаем тогда.
+    events.forEach((ev) => window.addEventListener(ev, unlock, true))
+    a.addEventListener('play', off)
+    const attempt = () => {
+      if (userPaused() || otherTabOwns()) return
       claim()
-      a.play().catch(() => events.forEach((ev) => window.addEventListener(ev, unlock, true)))
+      a.play().then(off).catch(() => {})
     }
+    const root = document.documentElement
+    const loading = () => root.classList.contains('is-loading') || root.classList.contains('intro')
+    let mo
+    if (loading()) {
+      mo = new MutationObserver(() => { if (!loading()) { mo.disconnect(); attempt() } })
+      mo.observe(root, { attributes: true, attributeFilter: ['class'] })
+    } else attempt()
 
     // вкладка-владелец обновляет метку; если музыку забрала другая вкладка, здесь ставим на паузу
     const beat = setInterval(() => { if (isOwner()) claim() }, 1500)
@@ -91,6 +125,8 @@ export default function RadioPlayer() {
     window.addEventListener('pagehide', save)
     return () => {
       off()
+      mo?.disconnect()
+      a.removeEventListener('play', off)
       clearInterval(id)
       clearInterval(beat)
       window.removeEventListener('storage', onStorage)
@@ -130,7 +166,19 @@ export default function RadioPlayer() {
   }
 
   return (
-    <div className={`radio ${playing ? 'radio--on' : ''}`}>
+    <div className={`radio ${playing ? 'radio--on' : ''}`} onPointerDown={() => setHintOn(false)}>
+      {hintOn && (
+        <div className="radio__hint" role="status">
+          <svg viewBox="0 0 9 9" width="27" height="27" shapeRendering="crispEdges" aria-hidden="true">
+            <rect x="4" y="0" width="1" height="1" fill="#E3FFF1" />
+            <rect x="3" y="1" width="3" height="1" fill="#8AFFC4" />
+            <rect x="2" y="2" width="5" height="1" fill="#4DFFA0" />
+            <rect x="1" y="3" width="7" height="1" fill="#4DFFA0" />
+            <rect x="3" y="4" width="3" height="5" fill="#2FD68A" />
+          </svg>
+          <span>{playing ? t.radioHintOn : t.radioHintOff}</span>
+        </div>
+      )}
       <audio ref={audio} src={track} loop preload="none" />
       <button className="radio__btn" onClick={toggle} aria-label={playing ? t.radioPause : t.radioPlay} title={playing ? t.radioPause : t.radioPlay}>
         <svg viewBox="0 0 8 8" width="14" height="14" shapeRendering="crispEdges" aria-hidden="true">

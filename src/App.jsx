@@ -19,6 +19,7 @@ import LunaTeaser from './components/LunaTeaser'
 import LunaChat from './components/LunaChat'
 import LunaFab from './components/LunaFab'
 import Token from './components/Token'
+import Gallery from './components/Gallery'
 import DocsCta from './components/DocsCta'
 import Footer from './components/Footer'
 
@@ -46,6 +47,7 @@ export default function App() {
             <Phases gram={gram} />
             <Story gram={gram} />
           </Trail>
+          <Gallery />
           <Launchpad />
           <LunaTeaser onOpen={openChat} />
           <Token />
