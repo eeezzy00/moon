@@ -3,6 +3,9 @@ import { createRoot } from 'react-dom/client'
 import { LangProvider } from './i18n'
 import DocsPage from './pages/DocsPage.jsx'
 import './styles.css'
+import { startFavicon } from './lib/favicon'
+
+startFavicon()
 
 createRoot(document.getElementById('root')).render(
   <LangProvider>
