@@ -13,19 +13,15 @@ function initialLang() {
   return detectLang()
 }
 
-// Русский для России и СНГ, английский для всех остальных:
-// сначала языки браузера по порядку, затем часовой пояс (если браузер на английском)
+// Основной язык английский. Русский ставится только если браузер явно русскоязычный (россия и СНГ):
+// первый язык из списка или русский где-то в списке языков браузера
 const RU_LIKE = ['ru', 'uk', 'be', 'kk', 'ky', 'uz', 'tg', 'tk', 'hy', 'az', 'ka', 'mo']
-const CIS_ZONES = /^(Europe\/(Moscow|Kaliningrad|Samara|Volgograd|Kirov|Saratov|Astrakhan|Ulyanovsk|Minsk|Kyiv|Kiev|Chisinau|Simferopol|Uzhgorod|Zaporozhye)|Asia\/(Almaty|Qostanay|Aqtau|Aqtobe|Atyrau|Oral|Qyzylorda|Bishkek|Tashkent|Samarkand|Dushanbe|Ashgabat|Yerevan|Baku|Tbilisi|Yekaterinburg|Omsk|Novosibirsk|Barnaul|Tomsk|Novokuznetsk|Krasnoyarsk|Irkutsk|Chita|Yakutsk|Vladivostok|Magadan|Sakhalin|Kamchatka|Anadyr|Srednekolymsk|Ust-Nera|Khandyga))$/
 function detectLang() {
   try {
     const list = (navigator.languages?.length ? navigator.languages : [navigator.language]).map((l) => (l || '').toLowerCase().split('-')[0])
     const first = list.find(Boolean)
     if (RU_LIKE.includes(first)) return 'ru'
-    if (first === 'en' || !first) {
-      if (list.includes('ru')) return 'ru'
-      if (CIS_ZONES.test(Intl.DateTimeFormat().resolvedOptions().timeZone || '')) return 'ru'
-    }
+    if (list.includes('ru')) return 'ru'
   } catch {}
   return 'en'
 }
