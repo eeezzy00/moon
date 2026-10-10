@@ -108,7 +108,7 @@ export default {
     },
   },
   tgEarly: 'Telegram · early access', followUs: 'Follow us',
-  radioHintOn: 'Mute the sound here', radioHintOff: 'Turn the music on here',
+  radioHintOn: 'Drag the moon for volume, or pause here', radioHintOff: 'You can turn the music on here',
   navGallery: 'Gallery', galK: 'GALLERY', galH: 'MOON AI art',
   galP: 'Quiet scenes from our universe: rain, a lamp, books and a cat watching the moon. The rest is in the full gallery, each with a line about the sky.',
   gal: { desk: 'Night desk', nook: 'Reading nook', balcony: 'Balcony with string lights', rain: 'Room in the rain' },
