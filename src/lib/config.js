@@ -7,6 +7,7 @@ export const CONFIG = {
   socials: {
     x: 'https://x.com/Moonaiofficial8',
     telegram: 'https://t.me/+-Va7YKlK-z4zYTcy', // ранний доступ
+    devBlog: 'https://t.me/earlymainnet', // блог разработчика
   },
   maxGram: 2000,
   // Токеномика по стандарту фабрики moon.cx (как у MBTC). Сверить в интерфейсе moon.cx перед запуском.

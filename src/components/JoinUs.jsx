@@ -18,6 +18,9 @@ export default function JoinUs() {
             <a className="btn join__btn" href={CONFIG.socials.telegram} target="_blank" rel="noreferrer"><TgIcon /> {t.joinTg}</a>
             <a className="btn btn--ghost join__btn" href={CONFIG.socials.x} target="_blank" rel="noreferrer"><XIcon /> {t.joinX}</a>
           </div>
+          <a className="join__dev" href={CONFIG.socials.devBlog} target="_blank" rel="noreferrer">
+            <TgIcon /> <span>{t.joinDev}</span> <b>{t.joinDevLink} →</b>
+          </a>
         </div>
       </div>
     </section>

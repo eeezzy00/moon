@@ -143,6 +143,7 @@ export default {
   docsNav: 'Docs', docsBack: '← Back to home', docsOn: 'On this page',
   joinK: 'COMMUNITY', joinSub: "We're building a strong community. For the outsiders who still look up.",
   joinRule: 'Nobody walks in the dark alone.', joinTg: 'Join Telegram', joinX: 'Follow on X',
+  joinDev: 'Watch it being built:', joinDevLink: 'dev blog',
   docsCtaK: 'DOCUMENTATION', docsCtaH: 'Want to dig deeper?',
   docsCtaP: 'In the docs: curve mechanics, moon phases, the moon.cx link, contracts, risks, a glossary and frequently asked questions.',
   docsBtn: 'Open the docs', docsFaqBtn: 'FAQ',
