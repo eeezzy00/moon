@@ -11,7 +11,10 @@ export default function Footer() {
           <SocialLinks />
           <p>{t.disc}</p>
         </div>
-        <span>© 2026 {CONFIG.name}</span>
+        <div className="footer__side">
+          <a className="footer__intro" href="/?replay">▶ {t.showIntro}</a>
+          <span>© 2026 {CONFIG.name}</span>
+        </div>
       </div>
     </footer>
   )

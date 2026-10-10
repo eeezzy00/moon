@@ -896,3 +896,13 @@ a.gal__card { text-decoration: none; }
   .reveal > :not(h1, h2, .portrait, .split) { filter: none; }
   .aurora i { animation: none; }
 }
+
+/* ---------- Пропуск и повтор вступления ---------- */
+.loader__skip { margin-top: 6px; padding: 8px 16px; border: 1px solid rgba(138, 255, 196, .28); border-radius: 5px; background: rgba(1, 3, 2, .55); color: var(--muted); font: inherit; font-size: 15px; cursor: pointer;
+  opacity: 0; animation: skipin .6s var(--ease) 1.2s forwards; transition: color .25s, border-color .25s, box-shadow .25s; }
+.loader__skip:hover { color: var(--moon); border-color: rgba(138, 255, 196, .6); box-shadow: 0 0 24px rgba(77, 255, 160, .25); }
+@keyframes skipin { to { opacity: 1; } }
+.footer__side { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+.footer__intro { padding: 7px 14px; border: 1px solid rgba(138, 255, 196, .22); border-radius: 5px; color: var(--muted); font-size: 14px; text-decoration: none; transition: color .25s, border-color .25s, box-shadow .25s; }
+.footer__intro:hover { color: var(--moon); border-color: rgba(138, 255, 196, .55); box-shadow: 0 0 22px rgba(77, 255, 160, .22); }
+@media (max-width: 720px) { .footer__side { align-items: flex-start; } }

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useLang } from '../i18n'
 import Cosmos from './Cosmos'
 import HeroMoon from './HeroMoon'
 
@@ -10,9 +11,9 @@ const MAX_MS = 7000 // страховка: показать сайт, даже �
 // Вступление после загрузки: сначала луна, потом текст, кнопки, и только затем шапка и весь остальной сайт.
 // Пока висит класс intro, остальное скрыто (см. стили); при «уменьшении движения» вступление пропускается.
 const INTRO_MS = 4200
-function startIntro(root) {
+function startIntro(root, skip = false) {
   root.classList.remove('is-loading')
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+  if (skip || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
   root.classList.add('intro')
   setTimeout(() => root.classList.remove('intro'), INTRO_MS)
 }
@@ -20,10 +21,12 @@ function startIntro(root) {
 // Загрузка в виде луны: от новолуния до полнолуния по мере загрузки, затем мягко растворяется.
 // Пока на <html> висит класс is-loading, анимации первого экрана стоят на паузе.
 export default function Preloader() {
+  const { t } = useLang()
   const [shown, setShown] = useState(0)
   const [leaving, setLeaving] = useState(false)
   const [gone, setGone] = useState(false)
   const target = useRef(0)
+  const skipped = useRef(false)
 
   useEffect(() => {
     const root = document.documentElement
@@ -35,6 +38,22 @@ export default function Preloader() {
       setGone(true)
       return
     }
+    // вступление играет один раз; вернувшимся посетителям оно не показывается (кнопка «Показать интро» в подвале)
+    const params = new URLSearchParams(window.location.search)
+    const replay = params.has('replay')
+    let seen = false
+    try { seen = !!localStorage.getItem('introSeen') } catch {}
+    if (replay) {
+      params.delete('replay')
+      const q = params.toString()
+      history.replaceState(null, '', window.location.pathname + (q ? `?${q}` : '') + window.location.hash)
+    } else if (seen) {
+      root.classList.remove('is-loading')
+      setGone(true)
+      return
+    }
+    try { localStorage.setItem('introSeen', '1') } catch {}
+
     const start = performance.now()
     const tasks = []
     const done = () => { target.current = Math.min(1, target.current + 1 / tasks.length) }
@@ -49,15 +68,16 @@ export default function Preloader() {
     let finished = false
     const tick = (now) => {
       const elapsed = now - start
-      const goal = elapsed > MAX_MS ? 1 : Math.min(target.current, elapsed / MIN_MS)
+      const goal = elapsed > MAX_MS || skipped.current ? 1 : Math.min(target.current, elapsed / MIN_MS)
       cur += (goal - cur) * 0.08
+      if (skipped.current) cur = Math.max(cur, 0.9)
       if (goal - cur < 0.004) cur = goal
       setShown(Math.round(cur * 50) / 50) // шаг 2%: луна растёт пиксельными ступенями
       if (cur >= 1 && !finished) {
         finished = true
         setTimeout(() => {
           setLeaving(true)
-          startIntro(root)
+          startIntro(root, skipped.current)
           setTimeout(() => setGone(true), 1000)
         }, 260)
         return
@@ -81,6 +101,7 @@ export default function Preloader() {
           LOADING<span className="loader__dots"><i>.</i><i>.</i><i>.</i></span>
           <span className="loader__pct">{Math.round(shown * 100)}%</span>
         </div>
+        <button className="loader__skip" onClick={() => { skipped.current = true }}>{t.skipIntro} ▸</button>
       </div>
     </div>
   )

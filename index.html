@@ -6,6 +6,10 @@
     <meta name="theme-color" content="#010302" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="alternate icon" type="image/png" href="/moon.png" />
+    <script>
+      // Вступление показывается один раз: у вернувшихся посетителей сразу снимаем класс загрузки
+      try { if (localStorage.getItem('introSeen') && !/[?&]replay/.test(location.search)) document.documentElement.classList.remove('is-loading') } catch (e) {}
+    </script>
     <title>MOON AI — 8-bit lofi moon on TON</title>
     <meta name="description" content="The moon does not shine. It reflects. A pixel universe on TON, launching on moon.cx." />
     <meta property="og:type" content="website" />

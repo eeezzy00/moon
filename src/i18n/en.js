@@ -275,5 +275,6 @@ export default {
     ],
     phasesHead: ['Raised', 'Phase'],
   },
+  skipIntro: 'Skip intro', showIntro: 'Replay intro',
   disc: 'MOON AI is a new and volatile token. This site is not investment advice. Never invest more than you can afford to lose.',
 }
