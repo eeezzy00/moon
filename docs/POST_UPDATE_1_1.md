@@ -1,12 +1,11 @@
 # Update 1.1: пост для X
 
 Картинка: `docs/moonai_update_1_1.png` (1600×900).
-Ссылка: https://moonai.wiki (превью подтянется само: баннер, заголовок `MOON AI ($MOONAI) · pixel moon on TON`).
+Ссылка: https://moonai.wiki (превью уже настроено).
 
 Перед публикацией:
 - открыть https://moonai.wiki с телефона и с компьютера;
 - если ссылку уже кидали в Telegram, обновить превью через бота @WebpageBot;
-- пункт про «первых Наблюдателей» в планах оставить, только если это реально будете делать.
 
 ---
 
@@ -20,7 +19,7 @@ The moon is alive.
 When we started, MOON AI was one pixel moon on a black screen. Today it is a small universe. A moon that grows with the curve. A black hole at the edge of the page that pulls the stars in. Every phase has its own chapter of the legend, and each chapter stays a silhouette until the moon is ready for it. We rebuilt it more than once, because it never felt like enough. Now it does.
 
 LUNA.AI became the heart of it.
-She started as a small guide, a pixel astronaut who answers questions. She grew into the voice of the moon. She has moods and sounds, she knows the phase, the rules, the contracts and the story so far. She does not give financial advice, and she will tell you so herself.
+She started as a small guide, a pixel astronaut who answers questions. She grew into the voice of the moon. She has moods and sounds, she knows the phase, the rules, the contracts and the story so far. People who open the chat tend to stay longer than we planned for. We did not expect that, and we are taking it as a sign to give her more room. She does not give financial advice, and she will tell you so herself.
 
 There is a radio now.
 MOON.FM plays soft lofi for as long as you stay. The volume knob is a moon you drag with your finger. New stations are being prepared: one for the night, one for the morning, one for the full moon.
@@ -65,7 +64,8 @@ A pixel universe with a moon that grows with the curve, a black hole at the edge
 
 3/
 LUNA.AI grew into the voice of the moon.
-She has moods and sounds, knows the phase, the rules and the story so far.
+People stay in her chat longer than we planned for.
+She knows the phase, the rules and the story so far.
 Ask her anything. Except the ending.
 
 4/
