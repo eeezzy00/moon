@@ -301,10 +301,10 @@ export default function RadioPlayer() {
           </div>
           {STATIONS.map((s) => (
             <div key={s.id} className="radio__st">
-              <p>{s.name}<em>{s.tracks.length}</em></p>
+              {STATIONS.length > 1 && <p>{s.name}<em>{s.tracks.length}</em></p>}
               {s.tracks.map((tr) => (
                 <button key={tr.id} className={tr.id === cur?.id ? 'on' : ''} onClick={() => pick(tr)}>
-                  <i aria-hidden="true">{tr.id === cur?.id && playing ? '♪' : '▸'}</i>{tr.title}
+                  <i aria-hidden="true">{tr.id === cur?.id && playing ? '♪' : '▸'}</i><span>{tr.title}{tr.artist && <small>{tr.artist}</small>}</span>
                 </button>
               ))}
             </div>

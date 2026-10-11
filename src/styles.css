@@ -995,3 +995,12 @@ html, body { overflow-x: clip; }
 .radio__st > button.on { color: var(--moon); background: rgba(77, 255, 160, .12); }
 .radio__st > button.on i { color: var(--moon); }
 @media (max-width: 720px) { .radio__panel { position: fixed; top: 56px; left: 12px; right: 12px; width: auto; } }
+
+.radio__st > button span { display: flex; flex-direction: column; min-width: 0; }
+.radio__st > button small { font-size: 13px; color: var(--dim); line-height: 1.2; }
+.radio__st > button.on small { color: var(--teal); }
+@media (max-width: 720px) {
+  .radio__ptop button { width: 44px; height: 40px; font-size: 18px; }
+  .radio__st > button { padding: 10px 8px; }
+  .radio__panel { max-height: calc(100vh - 80px); }
+}

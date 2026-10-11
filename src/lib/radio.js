@@ -2,6 +2,7 @@
 //   music/<станция>/<трек>.mp3   станция = название папки (lofi-night -> «Lofi Night»)
 //   music/<трек>.mp3             треки прямо в music попадают на станцию MOON.FM
 // Порядок треков по имени файла (удобно нумеровать: 01_..., 02_...). Форматы: mp3, ogg, m4a, wav.
+// Исполнитель пишется после двойного подчёркивания: 01_rainy-night__alex-morgan.mp3 -> «Rainy Night», «Alex Morgan»
 const files = import.meta.glob('../../music/**/*.{mp3,ogg,m4a,wav}', { eager: true, query: '?url', import: 'default' })
 
 const pretty = (s) =>
@@ -22,7 +23,8 @@ function build() {
     const file = parts[parts.length - 1]
     const id = parts.length > 1 ? parts[0] : 'main'
     if (!map.has(id)) map.set(id, { id, name: id === 'main' ? 'MOON.FM' : pretty(id), tracks: [] })
-    map.get(id).tracks.push({ id: `${id}/${file}`, file, title: pretty(file) || file, src })
+    const [name, artist = ''] = file.replace(/\.[a-z0-9]+$/i, '').split('__')
+    map.get(id).tracks.push({ id: `${id}/${file}`, file, title: pretty(name) || file, artist: pretty(artist), src })
   }
   const list = [...map.values()]
   list.forEach((s) => s.tracks.sort(byName))
