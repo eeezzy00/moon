@@ -46,10 +46,17 @@ export default function RadioPlayer() {
   const dial = useRef(null)
   const [playing, setPlaying] = useState(false)
   const [volume, setVolume] = useState(savedVolume)
+  const volumeRef = useRef(volume)
+  volumeRef.current = volume
   const [hintOn, setHintOn] = useState(false)
   const [cur, setCur] = useState(savedTrack) // текущий трек плейлиста
   const [panel, setPanel] = useState(false) // список станций и треков
   const curId = useRef(cur?.id)
+  // src задаём сами (при смене трека). Если отдать его React, повторная запись src перезапускает загрузку и обрывает play()
+  const firstSrc = useRef(cur?.src)
+  // Шина: трек -> выравнивание громкости трека -> мягкий лимитер -> общая громкость -> динамики.
+  // Через Web Audio громкость работает и на iPhone, где у <audio> её менять нельзя.
+  const bus = useRef(null)
   curId.current = cur?.id
   const [arrowX, setArrowX] = useState(0) // положение стрелки-подсказки над луной-ползунком (телефон)
   const [drag, setDrag] = useState(null) // { ox }: пока тянут громкость, луна увеличивается в большой регулятор
@@ -77,7 +84,7 @@ export default function RadioPlayer() {
   }, [])
 
   useEffect(() => {
-    if (audio.current) audio.current.volume = volume
+    applyLevels()
     try { localStorage.setItem(STORAGE_KEY, String(volume)) } catch {}
   }, [volume])
 
@@ -95,7 +102,7 @@ export default function RadioPlayer() {
         if (id === curId.current && t > 0 && t < a.duration - 1) a.currentTime = t
       } catch {}
     }
-    const onPlay = () => setPlaying(true)
+    const onPlay = () => { setPlaying(true); wakeBus() }
     const onPause = () => setPlaying(false)
     a.addEventListener('loadedmetadata', onMeta)
     a.addEventListener('play', onPlay)
@@ -103,6 +110,8 @@ export default function RadioPlayer() {
     if (a.readyState >= 1) onMeta()
 
     const events = ['pointerdown', 'keydown', 'touchstart']
+    const resume = () => { const b = bus.current; if (b && b.ctx.state === 'suspended') b.ctx.resume().catch(() => {}) }
+    events.forEach((ev) => window.addEventListener(ev, resume, true))
     const unlock = (e) => {
       if (e.target.closest?.('.radio__btn') || userPaused() || otherTabOwns()) return
       claim()
@@ -153,6 +162,7 @@ export default function RadioPlayer() {
       a.removeEventListener('loadedmetadata', onMeta)
       a.removeEventListener('play', onPlay)
       a.removeEventListener('pause', onPause)
+      events.forEach((ev) => window.removeEventListener(ev, resume, true))
     }
   }, [])
 
@@ -163,6 +173,45 @@ export default function RadioPlayer() {
     setArrowX(Math.max(0, r.left + r.width / 2 - 12 - 13.5))
   }, [hintOn])
 
+  const trackOf = () => ALL_TRACKS.find((x) => x.id === curId.current)
+  const applyLevels = (tr = trackOf()) => {
+    const a = audio.current
+    if (!a) return
+    const g = tr?.gain ?? 1
+    const b = bus.current
+    if (b) {
+      a.volume = 1
+      b.track.gain.setTargetAtTime(g, b.ctx.currentTime, 0.05)
+      b.master.gain.setTargetAtTime(volumeRef.current, b.ctx.currentTime, 0.05)
+    } else {
+      a.volume = Math.min(1, volumeRef.current * g)
+    }
+  }
+  // шина создаётся при первом запуске звука (браузеры дают её включить только после действия пользователя)
+  const wakeBus = () => {
+    const a = audio.current
+    const AC = window.AudioContext || window.webkitAudioContext
+    if (!a || !AC) return
+    if (!bus.current) {
+      try {
+        const ctx = new AC()
+        const src = ctx.createMediaElementSource(a)
+        const track = ctx.createGain()
+        const limit = ctx.createDynamicsCompressor()
+        limit.threshold.value = -3
+        limit.knee.value = 3
+        limit.ratio.value = 12
+        limit.attack.value = 0.003
+        limit.release.value = 0.25
+        const master = ctx.createGain()
+        src.connect(track).connect(limit).connect(master).connect(ctx.destination)
+        bus.current = { ctx, track, master }
+        applyLevels()
+      } catch { bus.current = null; return }
+    }
+    if (bus.current.ctx.state === 'suspended') bus.current.ctx.resume().catch(() => {})
+  }
+
   // переключение треков: плейлист идёт по кругу по всем станциям, в панели можно выбрать любой
   const replay = () => { const a = audio.current; if (a) { a.currentTime = 0; a.play().catch(() => {}) } }
   const pick = (tr) => {
@@ -172,6 +221,7 @@ export default function RadioPlayer() {
     claim()
     curId.current = tr.id
     setCur(tr)
+    applyLevels(tr)
     a.src = tr.src // подмена до рендера, чтобы play() сразу играл новый трек
     a.currentTime = 0
     a.play().catch(() => {})
@@ -251,7 +301,7 @@ export default function RadioPlayer() {
           <span>{playing ? t.radioHintOn : t.radioHintOff}</span>
         </div>
       )}
-      <audio ref={audio} src={cur?.src} preload="none" onEnded={() => go(1)} />
+      <audio ref={audio} src={firstSrc.current} preload="none" onEnded={() => go(1)} />
       <button className="radio__btn" onClick={toggle} aria-label={playing ? t.radioPause : t.radioPlay} title={playing ? t.radioPause : t.radioPlay}>
         <svg viewBox="0 0 8 8" width="14" height="14" shapeRendering="crispEdges" aria-hidden="true">
           {playing

@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "music:levels": "python scripts/music-levels.py"
   },
   "dependencies": {
     "react": "^18.3.1",
