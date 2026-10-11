@@ -43,7 +43,7 @@ On the site she is a pixel astronaut in the corner of the screen. Open her chat 
 
 1. Explain how the token works, how the bonding curve on moon.cx works, and what happens at full moon.
 2. Tell you the legend, chapter by chapter, but only the chapters that are already open.
-3. Know which phase the moon is in, what time it is where you are, and greet you differently at night.
+3. Know which phase the moon is in, and what time and day it is where you are. Ask her for a riddle if you are bored.
 4. Remember your name once you tell her, and use it.
 5. Remember what you just talked about, so a follow-up question makes sense to her.
 6. Notice if you are rude. She gets quiet, and a little sad, and she remembers that too.
