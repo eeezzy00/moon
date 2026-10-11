@@ -10,26 +10,45 @@
       // Вступление показывается один раз: у вернувшихся посетителей сразу снимаем класс загрузки
       try { if (localStorage.getItem('introSeen') && !/[?&]replay/.test(location.search)) document.documentElement.classList.remove('is-loading') } catch (e) {}
     </script>
-    <title>MOON AI — 8-bit lofi moon on TON</title>
-    <meta name="description" content="The moon does not shine. It reflects. A pixel universe on TON, launching on moon.cx." />
+    <script>document.documentElement.classList.add('js')</script>
+    <style>.js .seo{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.seo{max-width:720px;margin:40px auto;padding:0 16px;font:16px/1.6 system-ui,sans-serif;color:#cfeee0;background:#010302}.seo a{color:#4dffa0}</style>
+    <meta name="description" content="MOON AI ($MOONAI) is a pixel meme token on TON, launching on moon.cx, a TON launchpad with a bonding curve. The moon on the site grows with the curve. The AI is LUNA.AI, the voice of the moon: a chat guide who explains the rules and tells the legend." />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="MOON AI" />
-    <meta property="og:title" content="MOON AI ($MOONAI)" />
-    <meta property="og:description" content="The moon does not shine. It reflects. A pixel universe on TON, launching on moon.cx." />
+    <meta property="og:title" content="MOON AI ($MOONAI) · pixel moon on TON" />
+    <meta property="og:description" content="MOON AI ($MOONAI) is a pixel meme token on TON, launching on moon.cx, a TON launchpad with a bonding curve. The moon on the site grows with the curve. The AI is LUNA.AI, the voice of the moon: a chat guide who explains the rules and tells the legend." />
     <meta property="og:url" content="https://moonai.wiki/" />
     <meta property="og:image" content="https://moonai.wiki/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="MOON AI ($MOONAI)" />
-    <meta name="twitter:description" content="The moon does not shine. It reflects. A pixel universe on TON, launching on moon.cx." />
+    <meta name="twitter:title" content="MOON AI ($MOONAI) · pixel moon on TON" />
+    <meta name="twitter:description" content="MOON AI ($MOONAI) is a pixel meme token on TON, launching on moon.cx, a TON launchpad with a bonding curve. The moon on the site grows with the curve. The AI is LUNA.AI, the voice of the moon: a chat guide who explains the rules and tells the legend." />
     <meta name="twitter:image" content="https://moonai.wiki/og.png" />
+    <link rel="canonical" href="https://moonai.wiki/" />
+    <title>MOON AI ($MOONAI) · pixel moon on TON</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div class="seo">
+        <h1>MOON AI ($MOONAI)</h1>
+        <p>A pixel meme token and a small 8-bit universe on TON. It launches on <a href="https://moon.cx">moon.cx</a>, a TON token launchpad: one bonding curve for everyone, a fixed supply of 1,000,000,000 tokens, and liquidity locked when the curve completes.</p>
+        <p>The moon on this site is a visual indicator of the curve. Every 500 GRAM raised opens a new moon phase and a new chapter of the legend. At 2000 GRAM, full moon, the token moves to a moon.cx pool.</p>
+        <p>The AI in the name is LUNA.AI, the voice of the moon. She is a chat guide on the site: she explains the rules, phases and contracts, and tells the legend chapter by chapter as the moon grows. She gives no financial advice.</p>
+        <p>Also here: MOON.FM, a lofi radio, and a gallery of pixel art.</p>
+        <p>Contract address: published on launch day, only on this site and in official channels.</p>
+        <ul>
+          <li><a href="https://moon.cx">Launchpad: moon.cx</a></li>
+          <li><a href="https://x.com/Moonaiofficial8">X: @Moonaiofficial8</a></li>
+          <li><a href="https://t.me/+-Va7YKlK-z4zYTcy">Telegram: early access</a></li>
+          <li><a href="/docs/">Docs</a> · <a href="/gallery/">Gallery</a></li>
+        </ul>
+        <p>New and volatile token. Not investment advice.</p>
+      </div>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

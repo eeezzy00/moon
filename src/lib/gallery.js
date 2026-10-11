@@ -1,5 +1,5 @@
 // Все изображения проекта: лофай-GIF, крео-сцены, пиксельные спрайты и иллюстрации легенды.
-// wide: широкая карточка на всю строку; px: пиксель-арт, масштабируется без сглаживания и без обрезки
+// still: статичный кадр GIF (анимация только при наведении); px: пиксель-арт, масштабируется без сглаживания и без обрезки
 export const GALLERY = [
   { id: 'desk', src: '/gallery/desk.gif', still: '/gallery/desk.png', group: 'lofi' },
   { id: 'nook', src: '/gallery/nook.gif', still: '/gallery/nook.png', group: 'lofi' },
