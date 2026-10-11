@@ -67,11 +67,15 @@ export default function Preloader() {
 
     let raf = 0
     let cur = 0
+    let last = start
     let finished = false
     const tick = (now) => {
-      const elapsed = now - start
+      // время, а не кадры: на слабом устройстве с низким fps загрузка не растягивается
+      const elapsed = Math.max(0, now - start)
+      const dt = Math.min(250, Math.max(0, now - last))
+      last = now
       const goal = elapsed > MAX_MS || skipped.current ? 1 : Math.min(target.current, elapsed / MIN_MS)
-      cur += (goal - cur) * 0.08
+      cur += (goal - cur) * (1 - Math.exp(-dt / 160))
       if (skipped.current) cur = Math.max(cur, 0.9)
       if (goal - cur < 0.004) cur = goal
       setShown(Math.round(cur * 50) / 50) // шаг 2%: луна растёт пиксельными ступенями
